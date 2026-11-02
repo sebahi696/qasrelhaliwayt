@@ -1,4 +1,4 @@
-# Qasr Al Halaweyat — ordering app prototype (PWA)
+# Qasr Al Halaweyat — ordering app (PWA)
 
 Customer app: `index.html` · Staff panel: `admin.html` · Driver page: `admin.html#d-<orderid>`
 
@@ -9,4 +9,4 @@ Menu, prices and photos come from the live QR menu (`menu-source.json`), 3 Leban
 Local run: `python -m http.server 8080` → http://localhost:8080/
 GitHub Pages: Settings → Pages → Deploy from branch `main` / root.
 
-Demo: order a Kaake Cheese with pistachio, apply code `QASR10`, pay cash → open `admin.html` and accept it.
+Try: order a Kaake Cheese with pistachio, apply code `QASR10`, pay cash → open `admin.html` and accept it.
