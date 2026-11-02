@@ -76,7 +76,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 .seg{display:grid;grid-template-columns:1fr 1fr;background:var(--sand);padding:4px;border-radius:16px;gap:4px}
 .seg button{height:42px;border-radius:12px;font-weight:700;color:var(--muted);transition:all .2s} .seg button.on{background:var(--paper);color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .hr{height:1px;background:var(--line);margin:14px 0}
-.toast{position:absolute;left:16px;right:16px;bottom:96px;background:var(--ink);color:var(--ivory);padding:12px 16px;border-radius:14px;font-weight:600;z-index:60;transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none;text-align:center}
+.toast{position:absolute;left:16px;right:16px;bottom:calc(var(--navh,64px) + 80px);background:var(--ink);color:var(--ivory);padding:12px 16px;border-radius:14px;font-weight:600;z-index:60;transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none;text-align:center}
 .toast.show{transform:none;opacity:1}
 
 /* Splash */
@@ -144,10 +144,10 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 
 /* Bottom nav */
 .nav{display:flex;background:var(--paper);border-top:1px solid var(--line);padding-bottom:2px;flex:none;padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:max(6px,env(safe-area-inset-right,0px));position:relative;z-index:6}
-.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 10px;font-size:10.5px;font-weight:800;color:var(--muted);position:relative;letter-spacing:.04em}
+.nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 0 8px;font-size:10.5px;line-height:1.2;white-space:nowrap;font-weight:800;color:var(--muted);position:relative;letter-spacing:.04em}
 .nav button svg{width:22px;height:22px} .nav button.on{color:var(--indigo)} .nav button.on::before{content:"";position:absolute;top:0;width:28px;height:3px;border-radius:0 0 3px 3px;background:var(--gold)}
 .nav .badge{position:absolute;top:6px;inset-inline-end:calc(50% - 22px);min-width:18px;height:18px;border-radius:9px;background:var(--gold);color:#fff;font-size:11px;display:grid;place-items:center;padding:0 5px}
-.cartbar{position:absolute;left:16px;right:16px;bottom:84px;z-index:7;display:flex;align-items:center;gap:12px;background:var(--indigo);color:#fff;border-radius:18px;padding:12px 14px 12px 12px;box-shadow:0 12px 30px rgba(20,27,73,.35);transform:translateY(120px);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.cartbar{position:absolute;left:16px;right:16px;bottom:calc(var(--navh,64px) + 12px);z-index:7;display:flex;align-items:center;gap:12px;background:var(--indigo);color:#fff;border-radius:18px;padding:12px 14px 12px 12px;box-shadow:0 12px 30px rgba(20,27,73,.35);transform:translateY(120px);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
 .cartbar.show{transform:none} .cartbar .cnt{width:30px;height:30px;border-radius:10px;background:var(--gold);display:grid;place-items:center;font-weight:800;font-size:13px}
 .cartbar .lbl{font-weight:700;flex:1} .cartbar .tot{font-weight:800}
 
@@ -420,7 +420,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
         <button class="acc card" id="accBranch"><div class="ic">📍</div><div><div class="t" data-t="branchT"></div><div class="s" id="accBranchS"></div></div><span class="arrow">›</span></button>
         
         <button class="btn ghost" id="signOut" style="margin-top:8px" data-t="signOut"></button>
-        <div style="text-align:center;color:var(--muted);font-size:11px;margin-top:20px">Qasr Al Halaweyat · v1.0.2 (15)</div>
+        <div style="text-align:center;color:var(--muted);font-size:11px;margin-top:20px">Qasr Al Halaweyat · v1.0.3 (16)</div>
         <div style="height:40px"></div>
       </div>
       <nav class="nav"></nav>
@@ -653,14 +653,14 @@ $('#accBranch').onclick=()=>show('mode');
 // ---------- Nav ----------
 const icons={home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5V20H4z"/><path d="M10 20v-6h4v6"/></svg>',deals:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8H4v-8"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7c-2-3-6-3-6 0s4 0 6 0Zm0 0c2-3 6-3 6 0s-4 0-6 0Z"/></svg>',cart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 13H5z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>',orders:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',account:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>'};
 const navLbl={home:{en:'Menu',ar:'المنيو'},deals:{en:'Deals',ar:'عروض'},cart:{en:'Cart',ar:'السلة'},orders:{en:'Orders',ar:'طلباتي'},account:{en:'Account',ar:'حسابي'}};
-function renderNav(){ const n=cartCount(); $$('.nav').forEach(nav=>{ nav.innerHTML=['home','deals','cart','orders','account'].map(k=>`<button class="${S.tab===k?'on':''}" data-nav="${k}">${icons[k]}<span>${L(navLbl[k])}</span>${k==='cart'&&n?`<span class="badge">${n}</span>`:''}</button>`).join(''); nav.querySelectorAll('button').forEach(b=>b.onclick=()=>go(b.dataset.nav)); }); }
+function renderNav(){ requestAnimationFrame(()=>{ const nav=document.querySelector('.screen.on .nav'); if(nav&&nav.offsetHeight) document.documentElement.style.setProperty('--navh',nav.offsetHeight+'px'); }); const n=cartCount(); $$('.nav').forEach(nav=>{ nav.innerHTML=['home','deals','cart','orders','account'].map(k=>`<button class="${S.tab===k?'on':''}" data-nav="${k}">${icons[k]}<span>${L(navLbl[k])}</span>${k==='cart'&&n?`<span class="badge">${n}</span>`:''}</button>`).join(''); nav.querySelectorAll('button').forEach(b=>b.onclick=()=>go(b.dataset.nav)); }); }
 function go(k){ if(k==='home'){renderHome();show('home');} else if(k==='cart'){renderCart();show('cart');} else if(k==='orders'){renderOrders();show('orders');} else if(k==='deals'){renderDeals();show('deals');} else if(k==='account'){renderAccount();show('account');} }
 $$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
 
 // boot
 const savedLang=D.load('qasr_lang',null); if(savedLang) S.lang=savedLang; applyLang();
 // Viewport: measure the real visible height (Android URL bar, in-app browsers, PWA) instead of trusting 100vh
-function fitViewport(){ const h=(window.visualViewport?window.visualViewport.height:window.innerHeight); if(h) document.documentElement.style.setProperty('--vh',Math.round(h)+'px'); }
+function fitViewport(){ const h=(window.visualViewport?window.visualViewport.height:window.innerHeight); if(h) document.documentElement.style.setProperty('--vh',Math.round(h)+'px'); const nav=document.querySelector('.screen.on .nav')||document.querySelector('.nav'); if(nav&&nav.offsetHeight) document.documentElement.style.setProperty('--navh',nav.offsetHeight+'px'); }
 fitViewport(); window.addEventListener('resize',fitViewport); if(window.visualViewport){ window.visualViewport.addEventListener('resize',fitViewport); window.visualViewport.addEventListener('scroll',fitViewport); } setTimeout(fitViewport,300); setTimeout(fitViewport,1500);
 // PWA: service worker, install banner, offline bar
 if('serviceWorker' in navigator && location.protocol==='https:'){ navigator.serviceWorker.register('sw.js').then(r=>{ r.update().catch(()=>{}); }).catch(()=>{}); let reloaded=false; navigator.serviceWorker.addEventListener('controllerchange',()=>{ if(reloaded) return; reloaded=true; location.reload(); }); }
