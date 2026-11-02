@@ -1,5 +1,5 @@
 // Qasr PWA service worker — cache-first for the app shell & photos, network-first for HTML so updates land.
-const V = 'qasr-v3';
+const V = 'qasr-v4';
 const SHELL = ['./', './index.html', './admin.html', './data.js', './manifest.json', './admin.webmanifest', './img/mark.png', './img/mark_white.png', './img/banner.webp', './img/gallery1.webp', './img/gallery2.webp', './img/gallery3.webp'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });

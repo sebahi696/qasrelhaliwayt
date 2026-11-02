@@ -48,7 +48,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
   .phone{height:min(900px,calc(100vh - 48px));border-radius:48px;border:10px solid #0B0D1F;box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 0 2px #2a2d4a inset}
   .phone::after{content:"";position:absolute;top:12px;left:50%;transform:translateX(-50%);width:110px;height:28px;background:#0B0D1F;border-radius:20px;z-index:50}
 }
-@media (max-width:859px){ .stage{padding:0;display:block;height:100%;min-height:0} .phone{height:100%;max-width:none} }
+@media (max-width:859px){ :root{padding:0} .stage{padding:0;display:block;height:100%;min-height:0;overflow:hidden} .phone{position:fixed;inset:0;height:auto;max-width:none;top:env(safe-area-inset-top,0px);bottom:env(safe-area-inset-bottom,0px)} body{overflow:hidden;position:fixed;inset:0} }
 
 /* Screens */
 .screen{position:absolute;inset:0;display:none;flex-direction:column;background:var(--ivory)}
@@ -143,7 +143,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
 .closed-note{margin-top:12px;padding:12px 14px;border-radius:14px;background:var(--danger-bg);color:var(--danger);font-weight:700;font-size:13px;display:flex;gap:10px;align-items:center}
 
 /* Bottom nav */
-.nav{display:flex;background:var(--paper);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:max(6px,env(safe-area-inset-right,0px));position:relative;z-index:6}
+.nav{display:flex;background:var(--paper);border-top:1px solid var(--line);padding-bottom:2px;flex:none;padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:max(6px,env(safe-area-inset-right,0px));position:relative;z-index:6}
 .nav button{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 10px;font-size:10.5px;font-weight:800;color:var(--muted);position:relative;letter-spacing:.04em}
 .nav button svg{width:22px;height:22px} .nav button.on{color:var(--indigo)} .nav button.on::before{content:"";position:absolute;top:0;width:28px;height:3px;border-radius:0 0 3px 3px;background:var(--gold)}
 .nav .badge{position:absolute;top:6px;inset-inline-end:calc(50% - 22px);min-width:18px;height:18px;border-radius:9px;background:var(--gold);color:#fff;font-size:11px;display:grid;place-items:center;padding:0 5px}
