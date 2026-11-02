@@ -1,0 +1,2 @@
+{ "name": "Qasr Staff Panel", "short_name": "Qasr Staff", "start_url": "./admin.html", "scope": "./", "display": "standalone", "background_color": "#141B49", "theme_color": "#141B49",
+  "icons": [ {"src":"img/admin-icon-192.png","sizes":"192x192","type":"image/png"}, {"src":"img/admin-icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"} ] }
