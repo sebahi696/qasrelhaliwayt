@@ -10,6 +10,6 @@ export default defineConfig({
   trailingSlash: 'always',
   output: 'static',
   build: { format: 'directory', assets: '_assets' },
-  integrations: [sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', ar: 'ar' } } })],
+  integrations: [sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', ar: 'ar' } }, filter: p => !/\/shop\/checkout\/|\/404/.test(p) && p !== site + '/' && p !== site })],
   compressHTML: true,
 });
