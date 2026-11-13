@@ -37,6 +37,7 @@ const nav = [['menu', 'nav_menu'], ['shop', 'nav_shop'], ['branches', 'nav_branc
 <script type="application/ld+json" set:html={JSON.stringify(org)} />
 {jsonld.map(j => <script type="application/ld+json" set:html={JSON.stringify(j)} />)}
 <script is:inline define:vars={{ lang, base }}>window.QS = { lang, base };</script>
+<script is:inline defer src={`${base}/app/config.js`}></script>
 <script is:inline defer src={`${base}/cart.js`}></script>
 <style is:global>
 :root{--gold:#B8822E;--gold-deep:#8F6118;--gold-soft:#F3E6CF;--indigo:#1F2A6B;--indigo-deep:#141B49;--indigo-soft:#E6E9F6;--turq:#2E9FD1;--ivory:#FBF7F0;--paper:#fff;--sand:#EADFCB;--line:#E7DCC7;--ink:#1C1812;--muted:#6B6257;--ok:#2E7D4F;--ok-bg:#E4F2EA;--danger:#B3261E;--display:'Marcellus',Georgia,serif;--body:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;--ar:'Tajawal','Segoe UI',Tahoma,sans-serif;--w:1120px;color-scheme:light}

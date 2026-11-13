@@ -434,6 +434,8 @@ button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-v
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script>
 (function(){
@@ -474,7 +476,7 @@ const SAMPLE_ACCOUNTS=[
 ];
 function fillDial(){ const d=$('#auDial'); d.innerHTML=DIALS.map(x=>`<option value="${x[1]}" ${x[0]==='LB'?'selected':''}>${x[2]} ${x[1]}</option>`).join(''); }
 function signedIn(){ return !!(S.user.phone||S.user.email); }
-function signIn(u){ S.user={...S.user,...u,points:u.points??S.user.points??D.settings.welcomeBonus,joined:S.user.joined||Date.now()}; D.save('qasr_user',S.user); const cs=D.load('qasr_customers',[]); if(!cs.some(c=>c.phone===S.user.phone)){ cs.unshift({name:S.user.name,phone:S.user.phone,email:S.user.email||'',source:u.source||'phone',verified:!!u.verified,joined:Date.now(),points:S.user.points}); D.save('qasr_customers',cs); } toast(L({en:`Welcome, ${S.user.name.split(' ')[0]}`,ar:`أهلاً ${S.user.name.split(' ')[0]}`})); if(S.afterAuth==='checkout'&&S.mode){ S.afterAuth=null; renderCheckout(); show('checkout'); } else show('mode'); }
+function signIn(u){ S.user={...S.user,...u,points:u.points??S.user.points??D.settings.welcomeBonus,joined:S.user.joined||Date.now()}; D.save('qasr_user',S.user); const cs=D.load('qasr_customers',[]); if(!cs.some(c=>c.phone===S.user.phone)){ cs.unshift({name:S.user.name,phone:S.user.phone,email:S.user.email||'',source:u.source||'phone',verified:!!u.verified,joined:Date.now(),points:S.user.points}); D.save('qasr_customers',cs); } S.user.source=S.user.source||u.source||'phone'; D.upsertCustomer(S.user); toast(L({en:`Welcome, ${S.user.name.split(' ')[0]}`,ar:`أهلاً ${S.user.name.split(' ')[0]}`})); if(S.afterAuth==='checkout'&&S.mode){ S.afterAuth=null; renderCheckout(); show('checkout'); } else show('mode'); }
 $('#auGo').onclick=()=>{ const name=$('#auName').value.trim(), ph=$('#auPhone').value.trim().replace(/^0/,''); if(!name||ph.replace(/\D/g,'').length<6){ toast(t('authErr')); return; } signIn({name,phone:$('#auDial').value+' '+ph,source:'phone',verified:false}); };
 $('#auGuest').onclick=()=>show('mode');
 $('#auGoogle').onclick=()=>{ $('#sheet').innerHTML=`<div class="grab"></div><div class="body" style="padding-top:8px"><div class="row" style="margin-bottom:14px"><svg width="22" height="22" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.6 30.2 0 24 0 14.6 0 6.5 5.4 2.6 13.3l7.8 6C12.3 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.2 5.5-4.7 7.2l7.5 5.8C43.9 38 46.5 31.8 46.5 24.5z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.8-6A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.8-6z"/><path fill="#34A853" d="M24 48c6.2 0 11.4-2 15.2-5.6l-7.5-5.8c-2 1.4-4.6 2.2-7.7 2.2-6.3 0-11.7-4.1-13.6-9.8l-7.8 6C6.5 42.6 14.6 48 24 48z"/></svg><div class="grow"><div style="font-weight:800">${L({en:'Choose an account',ar:'اختر حساباً'})}</div><div class="muted" style="font-size:12px">${L({en:'to continue to Qasr Al Halaweyat',ar:'للمتابعة إلى قصر الحلويات'})}</div></div></div>${SAMPLE_ACCOUNTS.map((a,i)=>`<button class="acc card" data-acc="${i}"><div class="ic" style="background:${a.color};color:#fff;font-weight:800;border-radius:50%">${a.init}</div><div><div class="t">${a.name}</div><div class="s">${a.email}</div></div></button>`).join('')}<button class="acc card" id="accOther"><div class="ic">＋</div><div><div class="t">${L({en:'Use another account',ar:'استخدم حساباً آخر'})}</div></div></button><div style="height:12px"></div></div>`; $('#sheetBg').classList.add('on'); $('#sheet').classList.add('on'); $$('#sheet [data-acc]').forEach(b=>b.onclick=()=>{ const a=SAMPLE_ACCOUNTS[+b.dataset.acc]; closeSheet(); signIn({...a,source:'google'}); }); $('#accOther').onclick=()=>{ closeSheet(); $('#auName').focus(); }; };
@@ -497,10 +499,10 @@ $('#modeLb').onclick=()=>{ $('#modeLb').classList.add('sel');$('#modeIntl').clas
 $('#modeIntl').onclick=()=>{ $('#modeIntl').classList.add('sel');$('#modeLb').classList.remove('sel'); $('#branchList').hidden=true; $('#intlPick').hidden=false; renderCountry(); $('#intlPick').scrollIntoView({behavior:'smooth',block:'start'}); };
 $('#locate').onclick=()=>{ const btn=$('#locate'); btn.disabled=true; btn.innerHTML='📍 '+t('findingYou'); const done=(lat,lng,msg)=>{ S.me={lat,lng}; btn.disabled=false; btn.innerHTML='📍 <span>'+t('useLoc')+'</span>'; toast(msg); renderBranches(); }; if(!navigator.geolocation){ done(33.8938,35.5018,t('locUnavailable')); return; } navigator.geolocation.getCurrentPosition(pos=>done(pos.coords.latitude,pos.coords.longitude,t('locFound')),()=>done(33.8938,35.5018,t('locUnavailable')),{timeout:6000,maximumAge:60000}); };
 function renderCountry(){
-  const sel=$('#country'); sel.innerHTML=D.intl.countries.filter(c=>c.enabled).map(c=>`<option value="${c.code}" ${c.code===S.country?'selected':''}>${c.flag} ${L(c.name)}</option>`).join('');
+  const sel=$('#country'); sel.innerHTML=D.liveCountries().filter(c=>c.enabled).map(c=>`<option value="${c.code}" ${c.code===S.country?'selected':''}>${c.flag} ${L(c.name)}</option>`).join('');
   sel.onchange=()=>{S.country=sel.value;D.save('qasr_country',S.country);renderShipEst();}; renderShipEst();
 }
-const country=()=>D.intl.countries.find(c=>c.code===S.country);
+const country=()=>D.liveCountries().find(c=>c.code===S.country)||D.intl.countries[0];
 function renderShipEst(){ const c=country(); $('#shipEst').innerHTML=`<div class="row"><div class="grow"><div class="eyebrow">${D.intl.carrier} · ${c.days} ${L({en:'days',ar:'أيام'})}</div><div class="big money">${fmt(c.base)} <small style="font-size:13px;color:var(--muted);font-family:var(--body);font-weight:600">${L({en:'first kg, then',ar:'أول كيلو، ثم'})} ${fmt(c.ratePerKg)}/kg</small></div></div><div style="font-size:34px">${c.flag}</div></div>`; }
 $('#goIntl').onclick=()=>{ S.mode='intl'; S.branch=null; D.save('qasr_mode','intl'); D.save('qasr_country',S.country); enterHome(); };
 
@@ -612,11 +614,11 @@ $('#placeOrder').onclick=()=>{
   const addr=needAddr?(intl?[$('#cStreet').value,$('#cBldg').value,$('#cCity').value+' '+$('#cFloor').value,L(country().name)]:[$('#cArea').value,$('#cStreet').value,$('#cBldg').value,$('#cFloor').value]).map(x=>x&&x.trim()).filter(Boolean).join(', '):'';
   if(!name||!phone||(needAddr&&!$('#cStreet').value.trim())){ toast(t('fillAll')); return; }
   S.user.name=name; S.user.phone=phone; if(intl) S.user.email=$('#cEmail').value.trim(); D.save('qasr_user',S.user); if(needAddr) D.save('qasr_addr',{street:$('#cStreet').value,bldg:$('#cBldg').value,floor:$('#cFloor').value,area:$('#cArea').value});
-  const f=fees(); const id='Q'+(2300+D.getOrders().length+1+Math.floor(Math.random()*5));
+  const f=fees(); const id='Q'+String(Date.now()).slice(-7)+String(Math.floor(Math.random()*10));
   const order={id,ts:Date.now(),status:'received',branch:intl?'intl':S.branch,type:intl?'intl':S.type,country:intl?S.country:undefined,weight:intl?Math.max(1,Math.ceil(cartWeight())):undefined,
     lines:S.cart.map(l=>({id:l.id,qty:l.qty,opts:l.opts,price:l.unit,note:l.note})),customer:{name,phone,email:intl?$('#cEmail').value.trim():(S.user.email||''),verified:S.user.verified,address:addr},eta:intl?etaRange(country().days):undefined,notes:$('#cNotes').value,
     subtotal:f.sub,delivery:intl?f.ship:f.del,discount:f.disc,total:f.total,pay:S.pay,promo:S.promo?.code,source:'app'};
-  D.addOrder(order); S.myOrders.unshift(id); D.save('qasr_my_orders',S.myOrders); S.user.points+=f.earn; D.save('qasr_user',S.user);
+  D.addOrder(order); S.myOrders.unshift(id); D.save('qasr_my_orders',S.myOrders); S.user.points+=f.earn; D.save('qasr_user',S.user); D.upsertCustomer({...S.user,source:S.user.source||'app'});
   S.cart=[]; S.promo=null; S.lastOrder=id; renderCartbar(); renderNav();
   $('#successSub').textContent=intl?L({en:`Sealed tins, handed to DHL within 24h. Expected ${etaRange(country().days)}. Tracking number goes to ${$('#cEmail').value.trim()}. You earned ${f.earn} points.`,ar:`علب محكمة، تُسلَّم لـ DHL خلال ٢٤ ساعة. الوصول المتوقع ${etaRange(country().days)}. رقم التتبع يُرسل إلى ${$('#cEmail').value.trim()}. ربحت ${f.earn} نقطة.`}):L({en:`${L(branches().find(x=>x.id===S.branch).name)} will call to confirm, then it's on its way. You earned ${f.earn} points.`,ar:`${L(branches().find(x=>x.id===S.branch).name)} رح يتصل للتأكيد وبعدها بالطريق. ربحت ${f.earn} نقطة.`});
   show('success'); buzz([20,40,20]); const ring=$('#success .ring'); for(let i=0;i<14;i++){ const sp=document.createElement('i'); sp.className='sparkle'; const a=Math.PI*2*i/14, r=70+Math.random()*50; sp.style.setProperty('--dx',Math.cos(a)*r+'px'); sp.style.setProperty('--dy',Math.sin(a)*r+'px'); sp.style.left='50%'; sp.style.top='50%'; sp.style.animationDelay=(Math.random()*.2)+'s'; ring.appendChild(sp); setTimeout(()=>sp.remove(),1500); }
@@ -657,6 +659,10 @@ function renderNav(){ requestAnimationFrame(()=>{ const nav=document.querySelect
 function go(k){ if(k==='home'){renderHome();show('home');} else if(k==='cart'){renderCart();show('cart');} else if(k==='orders'){renderOrders();show('orders');} else if(k==='deals'){renderDeals();show('deals');} else if(k==='account'){renderAccount();show('account');} }
 $$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
 
+// cloud sync: config (menu/branches/countries), my orders, live status updates
+D.syncConfig().then(()=>{ if($('#home').classList.contains('on')) renderHome(); });
+D.syncOrders(S.myOrders); D.subscribeOrders(()=>S.myOrders); setInterval(()=>D.syncOrders(S.myOrders),20000);
+document.addEventListener('qasr:sync',()=>{ if($('#orders').classList.contains('on')) renderOrders(); if($('#track').classList.contains('on')) renderTrack(); });
 // boot
 const savedLang=D.load('qasr_lang',null); if(savedLang) S.lang=savedLang; applyLang();
 // Viewport: measure the real visible height (Android URL bar, in-app browsers, PWA) instead of trusting 100vh

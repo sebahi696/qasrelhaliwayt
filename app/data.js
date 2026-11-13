@@ -188,20 +188,80 @@ window.QASR = (function () {
     ];
   };
 
-  function getOrders() { let o = load(KEY, null); if (!o) { o = seedOrders(); save(KEY, o); } return o; }
-  function setOrders(o) { save(KEY, o); }
-  function addOrder(order) { const o = getOrders(); o.unshift(order); setOrders(o); return order; }
-  function updateOrder(id, patch) { const o = getOrders().map(x => x.id === id ? { ...x, ...patch } : x); setOrders(o); return o; }
+  // ---- Cloud store (Supabase) with local cache. Falls back to device-only mode when app/config.js is absent. ----
+  const CFG = window.QASR_CONFIG || {};
+  const sb = (CFG.url && CFG.anonKey && window.supabase) ? window.supabase.createClient(CFG.url, CFG.anonKey) : null;
+  const cloud = !!sb;
+  const emit = () => { try { document.dispatchEvent(new CustomEvent('qasr:sync')); } catch (e) {} };
 
-  const MENU_KEY = 'qasr_menu_overrides_v1';
-  function menuOverrides() { return load(MENU_KEY, {}); }
-  function setMenuOverride(id, patch) { const m = menuOverrides(); m[id] = { ...(m[id] || {}), ...patch }; save(MENU_KEY, m); }
-  function liveItems() { const m = menuOverrides(); return items.map(it => ({ ...it, ...(m[it.id] || {}) })); }
+  let ORDERS = load(KEY, null);
+  if (!ORDERS) { ORDERS = cloud ? [] : seedOrders(); save(KEY, ORDERS); }
+  const toRow = o => ({ id: o.id, status: o.status, branch: o.branch, type: o.type, source: o.source || 'app',
+    customer_phone: (o.customer && o.customer.phone) || null, customer_name: (o.customer && o.customer.name) || null,
+    total: +o.total || 0, ts: o.ts, data: o });
+  const fromRow = r => ({ ...r.data, status: r.status, id: r.id });
+  function mergeRows(rows) { (rows || []).forEach(r => { const o = fromRow(r); const i = ORDERS.findIndex(x => x.id === o.id); if (i >= 0) ORDERS[i] = o; else ORDERS.push(o); }); ORDERS.sort((a, b) => b.ts - a.ts); save(KEY, ORDERS); emit(); }
+  function getOrders() { return ORDERS; }
+  function setOrders(o) { ORDERS = o; save(KEY, o); emit(); }
+  function addOrder(order) { ORDERS = [order, ...ORDERS]; save(KEY, ORDERS); emit();
+    if (sb) sb.from('orders').insert(toRow(order)).then(({ error }) => { if (error) console.warn('order insert', error); });
+    return order; }
+  function updateOrder(id, patch) { ORDERS = ORDERS.map(x => x.id === id ? { ...x, ...patch } : x); save(KEY, ORDERS); emit();
+    const o = ORDERS.find(x => x.id === id);
+    if (sb && o) sb.from('orders').update(toRow(o)).eq('id', id).then(({ error }) => { if (error) console.warn('order update', error); });
+    return ORDERS; }
+  // Staff: load everything + live updates. Customer: only the ids this device placed.
+  async function syncOrders(ids) {
+    if (!sb) return;
+    if (ids) { if (!ids.length) return; const { data, error } = await sb.rpc('my_orders', { ids }); if (!error) mergeRows(data); return; }
+    const { data, error } = await sb.from('orders').select('*').order('ts', { ascending: false }).limit(1000);
+    if (!error) { ORDERS = data.map(fromRow); save(KEY, ORDERS); emit(); }
+  }
+  let liveCh = null;
+  function subscribeOrders(ids) {
+    if (!sb || liveCh) return;
+    liveCh = sb.channel('orders-live').on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, p => {
+      if (!p.new || !p.new.id) return; if (ids && !ids().includes(p.new.id)) return; mergeRows([p.new]);
+    }).subscribe();
+  }
 
-  const BR_KEY = 'qasr_branch_overrides_v1';
-  function branchOverrides() { return load(BR_KEY, {}); }
-  function setBranchOverride(id, patch) { const m = branchOverrides(); m[id] = { ...(m[id] || {}), ...patch }; save(BR_KEY, m); }
-  function liveBranches() { const m = branchOverrides(); return branches.map(b => ({ ...b, ...(m[b.id] || {}) })); }
+  function driverUpdate(id, status) { ORDERS = ORDERS.map(x => x.id === id ? { ...x, status } : x); save(KEY, ORDERS); emit();
+    if (sb) sb.rpc('driver_update', { oid: id, new_status: status }).then(({ error }) => { if (error) console.warn('driver update', error); }); }
+
+  // ---- Config overrides: menu / branch / intl / settings (admin-editable) ----
+  const CFG_KEYS = { menu: 'qasr_menu_overrides_v1', branch: 'qasr_branch_overrides_v1', intl: 'qasr_intl_v1', settings: 'qasr_settings' };
+  const ov = kind => load(CFG_KEYS[kind], {});
+  function setOverride(kind, key, patch) { const m = ov(kind); m[key] = { ...(m[key] || {}), ...patch }; save(CFG_KEYS[kind], m); emit();
+    if (sb) sb.from('config').upsert({ kind, key: String(key), data: m[key] }).then(({ error }) => { if (error) console.warn('config upsert', error); }); }
+  async function syncConfig() {
+    if (!sb) return; const { data, error } = await sb.from('config').select('*'); if (error) return;
+    const maps = { menu: {}, branch: {}, intl: {}, settings: {} };
+    data.forEach(r => { if (maps[r.kind]) maps[r.kind][r.key] = r.data; });
+    Object.keys(maps).forEach(k => { if (k === 'settings') { save(CFG_KEYS.settings, maps.settings.global || {}); Object.assign(settings, maps.settings.global || {}); } else save(CFG_KEYS[k], maps[k]); });
+    emit();
+  }
+  Object.assign(settings, load(CFG_KEYS.settings, {}));
+  const menuOverrides = () => ov('menu');
+  const setMenuOverride = (id, patch) => setOverride('menu', id, patch);
+  const liveItems = () => { const m = ov('menu'); return items.map(it => ({ ...it, ...(m[it.id] || {}) })); };
+  const branchOverrides = () => ov('branch');
+  const setBranchOverride = (id, patch) => setOverride('branch', id, patch);
+  const liveBranches = () => { const m = ov('branch'); return branches.map(b => ({ ...b, ...(m[b.id] || {}) })); };
+  const setIntlOverride = (code, patch) => setOverride('intl', code, patch);
+  const liveCountries = () => { const m = ov('intl'); return intl.countries.map(c => ({ ...c, ...(m[c.code] || {}) })); };
+  const setSettings = patch => { Object.assign(settings, patch); setOverride('settings', 'global', patch); };
+
+  // ---- Customers (phone = key) ----
+  function upsertCustomer(c) { if (!sb || !c || !c.phone) return;
+    sb.from('customers').upsert({ phone: c.phone, name: c.name || null, email: c.email || null, source: c.source || 'app', points: c.points || 0, data: c }).then(({ error }) => { if (error) console.warn('customer', error); }); }
+  async function syncCustomers() { if (!sb) return []; const { data, error } = await sb.from('customers').select('*').order('updated_at', { ascending: false }).limit(2000); if (error) return []; save('qasr_customers', data.map(r => ({ ...r.data, name: r.name, phone: r.phone, email: r.email, source: r.source, points: r.points, joined: r.data.joined || Date.parse(r.created_at) }))); emit(); return data; }
+
+  // ---- Staff auth ----
+  const auth = {
+    async user() { if (!sb) return { email: 'local@device' }; const { data } = await sb.auth.getSession(); return data.session ? data.session.user : null; },
+    async signIn(email, password) { if (!sb) return { error: null }; return sb.auth.signInWithPassword({ email, password }); },
+    async signOut() { if (sb) await sb.auth.signOut(); },
+  };
 
   const STATUS = {
     received: { en: 'New', ar: 'جديد' }, accepted: { en: 'Accepted', ar: 'مقبول' }, preparing: { en: 'Preparing', ar: 'قيد التحضير' },
@@ -212,5 +272,6 @@ window.QASR = (function () {
   const money = n => '$' + (Math.round(n * 100) / 100).toFixed(2);
 
   return { branches, intl, categories, items, banners, promos, rewards, settings, STATUS, isOpen, money,
-    getOrders, setOrders, addOrder, updateOrder, liveItems, setMenuOverride, menuOverrides, liveBranches, setBranchOverride, load, save };
+    getOrders, setOrders, addOrder, updateOrder, liveItems, setMenuOverride, menuOverrides, liveBranches, setBranchOverride, load, save,
+    cloud, sb, driverUpdate, syncOrders, subscribeOrders, syncConfig, setIntlOverride, liveCountries, setSettings, upsertCustomer, syncCustomers, auth };
 })();

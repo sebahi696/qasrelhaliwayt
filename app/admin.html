@@ -85,7 +85,7 @@ td .img{width:40px;height:40px;border-radius:10px;object-fit:cover;background:va
   <aside class="rail" id="rail">
     <div class="brand"><img src="img/mark_white.png" alt=""><div><b>Qasr Al Halaweyat</b><small data-t="staffPanel"></small></div></div>
     <nav id="nav"></nav>
-    <div class="who"><div class="av">A</div><div><div style="color:#fff;font-weight:700;font-size:13px">Abed</div><div style="font-size:11px">super_admin · Malla</div></div></div>
+    <div class="who"><div class="av" id="whoAv">·</div><div style="min-width:0"><div style="color:#fff;font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis" id="whoName">—</div><div style="font-size:11px"><span id="whoRole">staff</span> · <a href="#" id="signOut" style="color:#D9D4E6">sign out</a></div></div></div>
     <div class="foot"><button id="langBtn">🌐 <span id="langTx">العربية</span></button><a href="index.html" style="color:#D9D4E6;font-weight:700;text-decoration:none">📱 <span data-t="openApp"></span></a><span>v1.0 (13)</span></div>
   </aside>
   <div class="main">
@@ -93,9 +93,22 @@ td .img{width:40px;height:40px;border-radius:10px;object-fit:cover;background:va
     <div class="work" id="work"></div>
   </div>
 </div>
+<div id="login" hidden style="position:fixed;inset:0;z-index:50;background:var(--ivory);display:grid;place-items:center;padding:20px">
+  <form id="loginForm" class="card" style="width:100%;max-width:380px;padding:28px 24px;text-align:center">
+    <img src="img/mark.png" alt="" style="width:56px;margin-bottom:8px" onerror="this.style.display='none'">
+    <h1 class="disp" style="margin:0 0 2px;font-size:24px">Qasr Al Halaweyat</h1>
+    <div style="color:var(--muted);font-size:13px;margin-bottom:18px" id="loginSub">Staff sign in</div>
+    <input class="in" id="lEmail" type="email" placeholder="Email" autocomplete="username" required style="width:100%;margin-bottom:10px">
+    <input class="in" id="lPass" type="password" placeholder="Password" autocomplete="current-password" required style="width:100%;margin-bottom:14px">
+    <button class="btn g" type="submit" style="width:100%" id="lGo">Sign in</button>
+    <div id="lErr" style="color:var(--danger);font-size:12.5px;margin-top:10px;min-height:16px"></div>
+  </form>
+</div>
 <div class="modal-bg" id="modalBg"><div class="modal" id="modal"></div></div>
 <div class="toast" id="toast"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.4/dist/umd/supabase.min.js"></script>
+<script src="config.js"></script>
 <script src="data.js"></script>
 <script>
 (function(){
@@ -145,7 +158,12 @@ function act(id,a){ const o=D.getOrders().find(x=>x.id===id); const p={}; if(a==
 let lastNew=D.getOrders().filter(o=>o.status==='received').length;
 function checkNew(){ const n=D.getOrders().filter(o=>o.status==='received').length; document.title=(n?`(${n}) `:'')+'Qasr Staff Panel'; if(n>lastNew){ toast('🔔 '+L({en:'New order received',ar:'طلب جديد'})); try{ navigator.vibrate&&navigator.vibrate([60,40,60]); }catch(e){} } lastNew=n; }
 window.addEventListener('storage',e=>{ if(e.key&&e.key.startsWith('qasr_')){ checkNew(); if(S.page==='orders'){ orders(); } renderNav(); } });
-setInterval(()=>{ checkNew(); if(S.page==='orders') orders(); },8000);
+document.addEventListener('qasr:sync',()=>{ checkNew(); if(S.page==='orders') orders(); renderNav(); });
+setInterval(()=>{ checkNew(); if(S.page==='orders') orders(); },D.cloud?30000:8000);
+async function boot(){ const u=await D.auth.user(); if(!u){ $('#login').hidden=false; return; } $('#login').hidden=true; $('#whoName').textContent=u.email||'staff'; $('#whoAv').textContent=(u.email||'S')[0].toUpperCase();
+  await Promise.all([D.syncConfig(),D.syncOrders(),D.syncCustomers()]); lastNew=D.getOrders().filter(o=>o.status==='received').length; D.subscribeOrders(); setInterval(()=>D.syncOrders(),60000); render(); }
+$('#loginForm').onsubmit=async e=>{ e.preventDefault(); $('#lGo').disabled=true; $('#lErr').textContent=''; const {error}=await D.auth.signIn($('#lEmail').value.trim(),$('#lPass').value); $('#lGo').disabled=false; if(error){ $('#lErr').textContent=error.message; return; } boot(); };
+$('#signOut').onclick=async e=>{ e.preventDefault(); await D.auth.signOut(); location.reload(); };
 
 // ---------- Menu ----------
 function menu(){
@@ -171,11 +189,11 @@ function branches(){ const bs=D.liveBranches(); const os=D.getOrders();
   $$('[data-zones]').forEach(b=>b.onclick=()=>toast(L({en:'Excel import: columns Zone, Fee, Min — same as Roadside',ar:'استيراد Excel: أعمدة المنطقة، الرسم، الحد الأدنى'}))); }
 
 // ---------- International ----------
-function intl(){ const I=D.intl; const ov=D.load('qasr_intl_v1',{}); const cs=I.countries.map(c=>({...c,...(ov[c.code]||{})})); const intlOrders=D.getOrders().filter(o=>o.type==='intl');
+function intl(){ const I=D.intl; const cs=D.liveCountries(); const intlOrders=D.getOrders().filter(o=>o.type==='intl');
   $('#work').innerHTML=`<div class="tiles"><div class="card tile"><div class="l">${t('carrier')}</div><div class="v" style="font-size:20px">${I.carrier}</div></div><div class="card tile"><div class="l">${t('freeOver')}</div><div class="v money">${fmt(I.freeOver)}</div></div><div class="card tile"><div class="l">${t('minIntl')}</div><div class="v money">${fmt(I.minOrderUsd)}</div></div><div class="card tile"><div class="l">${t('intl')} ${t('ordersN').toLowerCase()}</div><div class="v">${intlOrders.length}</div></div></div>
   <div class="card"><div class="tbl"><table><thead><tr><th>${t('country')}</th><th>${t('base')}</th><th>${t('perKg')}</th><th>${t('days')}</th><th>${t('ordersN')}</th><th>${t('enabled')}</th></tr></thead><tbody>${cs.map(c=>`<tr><td><b>${c.flag} ${L(c.name)}</b> <span style="color:var(--muted);font-size:12px">${c.code}</span></td><td><input class="in sm money" type="number" value="${c.base}" data-c="${c.code}" data-k="base"></td><td><input class="in sm money" type="number" value="${c.ratePerKg}" data-c="${c.code}" data-k="ratePerKg"></td><td>${c.days}</td><td>${intlOrders.filter(o=>o.country===c.code).length}</td><td><button class="toggle ${c.enabled?'on':''}" data-c="${c.code}" data-k="enabled"></button></td></tr>`).join('')}</tbody></table></div></div>
   <div class="card" style="margin-top:14px;padding:14px"><div class="eyebrow" style="margin-bottom:8px">${L({en:'Shippable categories',ar:'الفئات القابلة للشحن'})}</div><div style="display:flex;gap:8px;flex-wrap:wrap">${D.categories.map(c=>`<span class="chip ${c.intl?'ind':''}">${c.emoji} ${L(c.name)} ${c.intl?'✓':'✕'}</span>`).join('')}</div><p style="color:var(--muted);font-size:12.5px;margin:10px 0 0">${L({en:'Fresh items (knefeh, platters, by-piece, by-kilo ashta) never show in the international menu. Weight per item drives the DHL estimate shown at checkout.',ar:'الأصناف الطازجة لا تظهر أبداً في المنيو الدولي. وزن كل صنف يحدد تقدير DHL عند الدفع.'})}</p></div>`;
-  const saveC=(code,patch)=>{ const o=D.load('qasr_intl_v1',{}); o[code]={...(o[code]||{}),...patch}; D.save('qasr_intl_v1',o); };
+  const saveC=(code,patch)=>D.setIntlOverride(code,patch);
   $$('#work input[data-c]').forEach(i=>i.onchange=()=>{ saveC(i.dataset.c,{[i.dataset.k]:+i.value}); toast(t('saved')); });
   $$('#work .toggle[data-c]').forEach(b=>b.onclick=()=>{ const on=!b.classList.contains('on'); saveC(b.dataset.c,{enabled:on}); b.classList.toggle('on'); const c=I.countries.find(x=>x.code===b.dataset.c); c.enabled=on; toast(L(c.name)+' · '+(on?'on':'off')); }); }
 
@@ -204,13 +222,13 @@ function reports(){ const os=D.getOrders().filter(o=>o.status!=='cancelled'); co
   <div class="card" style="padding:16px;grid-column:1/-1"><div class="eyebrow" style="margin-bottom:12px">${t('topItems')}</div>${top.map(([id,n])=>`<div class="hbar"><span class="lab">${itemName(+id)}</span><div class="tr"><i style="width:${n/tmx*100}%"></i></div><span class="v">${n}</span></div>`).join('')}</div></div>`; }
 
 // ---------- Settings ----------
-function settings(){ const s={...D.settings,...D.load('qasr_settings',{})}; const f=(k,l,step=1)=>`<div class="f"><label>${l}</label><input class="in" type="number" step="${step}" id="s_${k}" value="${s[k]}"></div>`;
+function settings(){ const s={...D.settings}; const f=(k,l,step=1)=>`<div class="f"><label>${l}</label><input class="in" type="number" step="${step}" id="s_${k}" value="${s[k]}"></div>`;
   $('#work').innerHTML=`<div class="grid2"><div class="card" style="padding:16px"><div class="eyebrow" style="margin-bottom:10px">${t('points')}</div>${f('pointsPerUsd',t('pointsRate'))}${f('cashbackPct',t('cashback'),0.5)}${f('welcomeBonus',t('welcome'))}</div><div class="card" style="padding:16px"><div class="eyebrow" style="margin-bottom:10px">${L({en:'Money & safety',ar:'المال والأمان'})}</div>${f('lbpRate',t('lbp'),100)}${f('unvLimit',t('unvLimit'))}${f('minBuild',t('minBuild'))}</div><div class="card" style="padding:16px"><div class="eyebrow" style="margin-bottom:10px">${L({en:'Payments',ar:'الدفع'})}</div>${[['cash','💵 '+t('cash'),true],['card','💳 '+t('card')+' (Areeba)',true],['whish','📱 Whish Money',true],['omt','🏧 OMT Pay',false]].map(([k,l,on])=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)"><span style="flex:1;font-weight:700">${l}</span><button class="toggle ${on?'on':''}"></button></div>`).join('')}</div><div class="card" style="padding:16px"><div class="eyebrow" style="margin-bottom:10px">${L({en:'Staff & roles',ar:'الموظفون والأدوار'})}</div>${[['Abed','super_admin','All'],['Bilal','owner','All'],['Rana','call_centre','Malla'],['Samer','branch_manager','Aramoun'],['Khaled','driver','Malla']].map(([n,r,b])=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)"><div class="av" style="width:30px;height:30px;border-radius:9px;background:var(--indigo-soft);color:var(--indigo);display:grid;place-items:center;font-weight:800">${n[0]}</div><div style="flex:1"><b>${n}</b><div style="font-size:11px;color:var(--muted)">${r} · ${b}</div></div><button class="btn sm o">${t('edit')}</button></div>`).join('')}<button class="btn o sm" style="margin-top:10px">+ ${L({en:'Staff login',ar:'حساب موظف'})}</button></div></div><div style="margin-top:14px"><button class="btn p" id="saveS">${t('save')}</button></div>`;
-  $('#saveS').onclick=()=>{ const o={}; ['pointsPerUsd','cashbackPct','welcomeBonus','lbpRate','unvLimit','minBuild'].forEach(k=>o[k]=+$('#s_'+k).value); D.save('qasr_settings',o); Object.assign(D.settings,o); toast(t('saved')); }; }
+  $('#saveS').onclick=()=>{ const o={}; ['pointsPerUsd','cashbackPct','welcomeBonus','lbpRate','unvLimit','minBuild'].forEach(k=>o[k]=+$('#s_'+k).value); D.setSettings(o); toast(t('saved')); }; }
 
 // driver page via hash
-function driverPage(){ const m=location.hash.match(/^#d-(q\d+)$/i); if(!m) return false; const o=D.getOrders().find(x=>x.id.toLowerCase()===m[1].toLowerCase()); document.body.innerHTML=`<div style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--ivory)"><div class="card" style="padding:24px;width:100%;max-width:380px;text-align:center">${o?`<div class="eyebrow">Driver · ${o.driver||''}</div><h1 class="disp" style="margin:6px 0 2px">#${o.id}</h1><div style="font-weight:700">${o.customer.name} · <span dir="ltr">${o.customer.phone}</span></div><div style="color:var(--muted);margin:6px 0 16px">${o.customer.address}</div><div style="font-size:28px;font-weight:800" class="money">${fmt(o.total)} <span style="font-size:13px;color:var(--muted)">${o.pay}</span></div><div style="display:grid;gap:10px;margin-top:18px">${o.status==='delivered'?`<span class="chip ok" style="justify-content:center;padding:12px">✓ Delivered · link expired</span>`:o.status==='onTheWay'?`<button class="btn ok" style="height:52px" id="dDel">✓ Delivered</button>`:`<button class="btn p" style="height:52px" id="dGot">Got the order</button>`}</div>`:`<h2>Link expired</h2>`}</div></div>`;
-  const g=$('#dGot'),d=$('#dDel'); if(g) g.onclick=()=>{D.updateOrder(o.id,{status:'onTheWay'});driverPage();}; if(d) d.onclick=()=>{D.updateOrder(o.id,{status:'delivered'});driverPage();}; return true; }
-if(!driverPage()){ applyLang(); render(); } if('serviceWorker' in navigator&&location.protocol==='https:'){ navigator.serviceWorker.register('sw.js').catch(()=>{}); } window.addEventListener('hashchange',()=>{ if(location.hash.startsWith('#d-')) location.reload(); });
+function driverPage(){ const m=location.hash.match(/^#d-(q\d+)$/i); if(!m) return false; const o=D.getOrders().find(x=>x.id.toLowerCase()===m[1].toLowerCase()); if(!o&&D.cloud&&!driverPage.tried){ driverPage.tried=true; D.syncOrders([m[1].toUpperCase()]).then(()=>driverPage()); return true; } document.body.innerHTML=`<div style="min-height:100%;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--ivory)"><div class="card" style="padding:24px;width:100%;max-width:380px;text-align:center">${o?`<div class="eyebrow">Driver · ${o.driver||''}</div><h1 class="disp" style="margin:6px 0 2px">#${o.id}</h1><div style="font-weight:700">${o.customer.name} · <span dir="ltr">${o.customer.phone}</span></div><div style="color:var(--muted);margin:6px 0 16px">${o.customer.address}</div><div style="font-size:28px;font-weight:800" class="money">${fmt(o.total)} <span style="font-size:13px;color:var(--muted)">${o.pay}</span></div><div style="display:grid;gap:10px;margin-top:18px">${o.status==='delivered'?`<span class="chip ok" style="justify-content:center;padding:12px">✓ Delivered · link expired</span>`:o.status==='onTheWay'?`<button class="btn ok" style="height:52px" id="dDel">✓ Delivered</button>`:`<button class="btn p" style="height:52px" id="dGot">Got the order</button>`}</div>`:`<h2>Link expired</h2>`}</div></div>`;
+  const g=$('#dGot'),d=$('#dDel'); if(g) g.onclick=()=>{D.driverUpdate(o.id,'onTheWay');driverPage();}; if(d) d.onclick=()=>{D.driverUpdate(o.id,'delivered');driverPage();}; return true; }
+if(!driverPage()){ applyLang(); render(); boot(); } if('serviceWorker' in navigator&&location.protocol==='https:'){ navigator.serviceWorker.register('sw.js').catch(()=>{}); } window.addEventListener('hashchange',()=>{ if(location.hash.startsWith('#d-')) location.reload(); });
 })();
 </script>
