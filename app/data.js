@@ -161,7 +161,7 @@ window.QASR = (function () {
     { id: 'r3', name: { en: '½ kg Baklawa Mix', ar: 'نص كيلو بقلاوة مشكل' }, points: 1100, itemId: 1380 },
   ];
 
-  const settings = { pointsPerUsd: 10, cashbackPct: 5, welcomeBonus: 100, currency: 'USD', lbpRate: 89500, minBuild: 13, unverifiedLimit: 2 };
+  const settings = { pointsPerUsd: 10, cashbackPct: 5, welcomeBonus: 100, currency: 'USD', lbpRate: 89500, minBuild: 13, unverifiedLimit: 2, intlLive: false };
 
   // ---- Shared order store (localStorage, shared by app + admin on the same device) ----
   const KEY = 'qasr_orders_v1';

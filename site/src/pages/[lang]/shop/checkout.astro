@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded',async()=>{ await QCart.ready; const
   document.getElementById('coSummary').innerHTML=lines?`<div style="border-top:1px solid var(--line);padding-top:12px">${lines}<div class="sum"><span>${T.sub}</span><span class="money">${money(f.sub)}</span></div><div class="sum"><span>${T.ship} · ${f.w} kg · ${f.c.flag}</span><span class="money">${f.ship?money(f.ship):'<span style=color:var(--ok)>'+T.free+'</span>'}</span></div><div class="sum tot"><span>${T.tot}</span><span class="money">${money(f.total)}</span></div><div class="muted" style="font-size:12.5px;margin-top:6px">✈️ ${T.arr} ${eta(f.c.days)}</div></div>`:`<p class="muted">${T.empty}</p>`;
   document.getElementById('placeBtn').disabled=!lines||f.sub<D.intl.minOrderUsd; }
  summary();
+ if(!QCart.live()){ location.replace(`${base}/${lang}/shop/`); return; }
  document.getElementById('co').onsubmit=e=>{ e.preventDefault(); const f=QCart.fees(); if(f.sub<D.intl.minOrderUsd){return;} const g=id=>document.getElementById(id).value.trim();
   const id='W'+Date.now().toString().slice(-6); const lines=QCart.cart().map(l=>{const p=D.products.find(x=>x.handle===l.handle);return {id:p.handle,qty:l.qty,opts:'',price:p.price,name:L(p.name)}});
   const addr=[g('street'),g('city')+' '+g('postal'),L(f.c.name)].join(', ');
