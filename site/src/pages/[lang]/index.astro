@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import { langs, t, L, money, type Lang } from '../../i18n';
+import menu from '../../data/menu.json';
+import shop from '../../data/shop.json';
+export function getStaticPaths() { return langs.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const u = (p: string) => `${base}/${lang}/${p}/`.replace(/\/+/g,'/');
+const seen = new Set<string>(); const popular = menu.items.filter((i: any) => i.popular && i.img && !seen.has(i.name.en) && seen.add(i.name.en)).slice(0, 8);
+const ship = shop.products.filter(p => p.images.length).slice(0, 8);
+const wa = (b: any) => `https://wa.me/${b.wa}?text=${encodeURIComponent(t(lang,'whatsapp_msg'))}`;
+const jsonld = menu.branches.map((b: any) => ({ '@context': 'https://schema.org', '@type': 'Bakery', name: `Qasr Al Halaweyat – ${b.name.en}`, image: `${Astro.site}img/menu/gallery2.webp`, telephone: '+961 ' + b.phone.replace(/^0/, ''), address: { '@type': 'PostalAddress', streetAddress: b.area.en, addressLocality: 'Beirut', addressCountry: 'LB' }, geo: { '@type': 'GeoCoordinates', latitude: b.lat, longitude: b.lng }, servesCuisine: 'Lebanese sweets', priceRange: '$', url: Astro.site }));
+---
+<Base lang={lang} title={t(lang,'brand')} description={t(lang,'hero_sub')} path="" jsonld={jsonld}>
+<section class="hero"><div class="bg" style={`background-image:url(${base}/img/menu/gallery3.webp)`}></div><img class="arch" src={`${base}/img/menu/mark_white.png`} alt="">
+  <div class="wrap"><div class="eyebrow">{t(lang,'hero_eyebrow')}</div><h1 class="disp">{t(lang,'hero_title')}</h1><p>{t(lang,'hero_sub')}</p>
+  <div class="row"><a class="btn g" href={`${base}/app/`}>{t(lang,'cta_app')}</a><a class="btn wa" href={wa(menu.branches[0])} target="_blank" rel="noopener">💬 {t(lang,'cta_whatsapp')}</a><a class="btn o" href={u('shop')} style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.3);color:#fff">✈️ {t(lang,'cta_shop')}</a></div></div>
+</section>
+
+<section class="sec"><div class="wrap"><div class="grid c3">
+  <a class="tile" href={u('menu/knefeh')}><img src={`${base}/img/menu/item_1327.webp`} alt="" loading="lazy"><div class="tx"><b>{L(menu.categories[0].name,lang)}</b><span>{t(lang,'in_lebanon')} · 5:30 AM</span></div></a>
+  <a class="tile" href={u('shop')}><img src={`${base}/img/menu/gallery1.webp`} alt="" loading="lazy"><div class="tx"><b>{t(lang,'sec_ship')}</b><span>DHL Express · 11 {lang==='ar'?'دولة':'countries'}</span></div></a>
+  <a class="tile" href={u('menu/platters')}><img src={`${base}/img/menu/gallery2.webp`} alt="" loading="lazy"><div class="tx"><b>{L(menu.categories[1].name,lang)}</b><span>{t(lang,'sec_fresh_sub')}</span></div></a>
+</div></div></section>
+
+<section class="sec"><div class="wrap"><div class="sec-h"><div><div class="eyebrow">{t(lang,'in_lebanon')}</div><h2 class="disp">{t(lang,'sec_fresh')}</h2><p>{t(lang,'sec_fresh_sub')}</p></div><a class="btn o sm" href={u('menu')}>{t(lang,'cta_menu')} →</a></div>
+<div class="grid c4">{popular.map((i: any) => <a class="card pcard" href={u(`menu/${i.cat}/${i.id}`)}><div class="ph"><img src={`${base}${i.img}`} alt={L(i.name,lang)} loading="lazy" width="400" height="400"></div><div class="b"><div class="n">{L(i.name,lang)}</div>{L(i.desc,lang) && <div class="d">{L(i.desc,lang)}</div>}<div class="pr money">{money(i.price)}</div></div></a>)}</div>
+<div class="card" style="margin-top:22px;padding:22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:var(--indigo);color:#fff;border:0"><div style="flex:1;min-width:240px"><b style="font-size:19px;display:block">{t(lang,'lb_title')}</b><span style="opacity:.9">{t(lang,'lb_sub')}</span></div><a class="btn g" href={`${base}/app/`}>{t(lang,'cta_app')}</a><a class="btn wa" href={wa(menu.branches[0])} target="_blank" rel="noopener">💬 WhatsApp</a></div>
+</div></section>
+
+<section class="sec"><div class="wrap"><div class="sec-h"><div><div class="eyebrow">{t(lang,'ships')}</div><h2 class="disp">{t(lang,'sec_ship')}</h2><p>{t(lang,'sec_ship_sub')}</p></div><a class="btn o sm" href={u('shop')}>{t(lang,'see_all')} →</a></div>
+<div class="grid c4">{ship.map(p => <a class="card pcard" href={u(`shop/${p.handle}`)}><div class="ph"><img src={`${base}${p.images[0]}`} alt={L(p.name,lang)} loading="lazy" width="400" height="400"></div><div class="b"><div class="n">{L(p.name,lang)}</div><div class="pr money">{money(p.price)} <small>{p.unit==='dozen'?t(lang,'per_dozen'):t(lang,'per_kg')}</small></div></div></a>)}</div></div></section>
+
+<section class="sec"><div class="wrap"><div class="sec-h"><div><div class="eyebrow">Lebanon</div><h2 class="disp">{t(lang,'sec_branches')}</h2></div><a class="btn o sm" href={u('branches')}>{t(lang,'see_all')} →</a></div>
+<div class="grid c3">{menu.branches.map((b: any) => <div class="card bcard"><h3 class="disp">{L(b.name,lang)}</h3><div class="kv">{L(b.area,lang)}</div><div class="kv">{L(b.hours,lang)}</div><div class="acts"><a class="btn sm o" href={`tel:+961${b.phone.replace(/\D/g,'').replace(/^0/,'')}`}>📞 {b.phone}</a><a class="btn sm wa" href={wa(b)} target="_blank" rel="noopener">WhatsApp</a></div></div>)}</div></div></section>
+
+<section class="sec"><div class="wrap"><div class="card" style="padding:34px;display:grid;grid-template-columns:1.2fr 1fr;gap:30px;align-items:center;overflow:hidden"><div><div class="eyebrow">1980</div><h2 class="disp" style="font-size:34px;margin:6px 0 12px">{t(lang,'sec_story')}</h2><p class="muted" style="font-size:17px;line-height:1.7">{lang==='ar'?'في عام ١٩٨٠ افتتح بلال المصري وعائلته من طرابلس محلّهم الأول في شارع الملا في بيروت، جامعين أصالة طرابلس بنكهة بيروت تحت اسم قصر الحلويات العربية.':'In 1980, Bilal Al Masri and his family from Tripoli opened their first modest shop on Mallah Street in Beirut, bringing Tripoli’s sweet heritage together with a twist of Beirut’s flavor under the name Qasr El Halaweyat El Arabiye.'}</p><a class="btn p" href={u('about')}>{t(lang,'story_more')}</a></div><img src={`${base}/img/menu/banner.webp`} alt="" loading="lazy" style="border-radius:18px;aspect-ratio:4/3;object-fit:cover"></div></div></section>
+<style>@media (max-width:860px){.sec .card[style*="grid-template-columns"]{grid-template-columns:1fr!important}}</style>
+</Base>

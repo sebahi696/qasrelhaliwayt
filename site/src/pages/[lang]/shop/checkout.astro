@@ -1,0 +1,43 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { langs, t, type Lang } from '../../../i18n';
+export function getStaticPaths() { return langs.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base lang={lang} title={t(lang,'co_title')} description={t(lang,'place_note')} path="shop/checkout" noindex shop>
+<div class="wrap" style="padding-top:36px;max-width:760px"><a href={`${base}/${lang}/shop/`} class="muted" style="text-decoration:none;font-size:14px">← {t(lang,'shop_title')}</a><h1 class="disp" style="font-size:40px;margin:8px 0 18px">{t(lang,'co_title')}</h1>
+<form id="co" class="card" style="padding:22px;display:grid;gap:14px">
+  <div class="eyebrow">{t(lang,'co_contact')}</div>
+  <div class="grid c2"><div class="field"><label for="name">{t(lang,'name')}</label><input id="name" required autocomplete="name"></div><div class="field"><label for="phone">{t(lang,'phone_l')}</label><input id="phone" required inputmode="tel" autocomplete="tel" placeholder="+971 50 …"></div></div>
+  <div class="field"><label for="email">{t(lang,'email')}</label><input id="email" type="email" required autocomplete="email"></div>
+  <div class="eyebrow" style="margin-top:8px">{t(lang,'co_address')}</div>
+  <div class="field"><label for="country">{t(lang,'country')}</label><select id="country"></select></div>
+  <div class="field"><label for="street">{t(lang,'street')}</label><input id="street" required autocomplete="street-address"></div>
+  <div class="grid c2"><div class="field"><label for="city">{t(lang,'city')}</label><input id="city" required autocomplete="address-level2"></div><div class="field"><label for="postal">{t(lang,'postal')}</label><input id="postal" required autocomplete="postal-code"></div></div>
+  <div class="field"><label for="notes">{t(lang,'notes')}</label><textarea id="notes" rows="2"></textarea></div>
+  <div id="coSummary"></div>
+  <button class="btn g" type="submit" id="placeBtn" style="height:54px">{t(lang,'place')}</button>
+  <p class="muted" style="font-size:13px;margin:0">{t(lang,'place_note')}</p>
+</form>
+<div id="done" class="card" hidden style="padding:34px;text-align:center"><div style="width:90px;height:90px;border-radius:50%;background:var(--ok-bg);display:grid;place-items:center;margin:0 auto 14px;font-size:40px;color:var(--ok)">✓</div><h2 class="disp" style="font-size:34px;margin:0 0 6px">{t(lang,'placed')}</h2><p class="muted" id="doneSub"></p><div class="row" style="justify-content:center"><a class="btn wa" id="doneWa" target="_blank" rel="noopener">💬 WhatsApp</a><a class="btn o" href={`${base}/${lang}/shop/`}>{t(lang,'continue')}</a></div></div>
+</div>
+<script is:inline define:vars={{ lang }}>
+document.addEventListener('DOMContentLoaded',async()=>{ await QCart.ready; const D=QCart.data(); const L=o=>o[lang]||o.en; const money=QCart.money; const base=window.QS.base;
+ const sel=document.getElementById('country'); sel.innerHTML=D.intl.countries.filter(c=>c.enabled).map(c=>`<option value="${c.code}" ${c.code===QCart.country()?'selected':''}>${c.flag} ${L(c.name)}</option>`).join(''); sel.onchange=()=>{QCart.setCountry(sel.value);summary();};
+ const T={en:{sub:'Subtotal',ship:'DHL shipping',tot:'Total',free:'Free',arr:'Arrives',empty:'Your cart is empty.',sent:'Reference',min:'Below the minimum order'},ar:{sub:'المجموع',ship:'شحن DHL',tot:'الإجمالي',free:'مجاني',arr:'يصل',empty:'سلتك فارغة.',sent:'المرجع',min:'أقل من الحد الأدنى'}}[lang];
+ const eta=d=>{const [a,b]=d.split('–').map(Number);const f=n=>new Date(Date.now()+(n+1)*864e5).toLocaleDateString(lang==='ar'?'ar-LB':'en-GB',{day:'numeric',month:'short'});return f(a)+' – '+f(b);};
+ function summary(){ const f=QCart.fees(); const lines=QCart.cart().map(l=>{const p=D.products.find(x=>x.handle===l.handle);return p?`<div class="sum"><span>${l.qty}× ${L(p.name)}</span><span class="money">${money(p.price*l.qty)}</span></div>`:''}).join('');
+  document.getElementById('coSummary').innerHTML=lines?`<div style="border-top:1px solid var(--line);padding-top:12px">${lines}<div class="sum"><span>${T.sub}</span><span class="money">${money(f.sub)}</span></div><div class="sum"><span>${T.ship} · ${f.w} kg · ${f.c.flag}</span><span class="money">${f.ship?money(f.ship):'<span style=color:var(--ok)>'+T.free+'</span>'}</span></div><div class="sum tot"><span>${T.tot}</span><span class="money">${money(f.total)}</span></div><div class="muted" style="font-size:12.5px;margin-top:6px">✈️ ${T.arr} ${eta(f.c.days)}</div></div>`:`<p class="muted">${T.empty}</p>`;
+  document.getElementById('placeBtn').disabled=!lines||f.sub<D.intl.minOrderUsd; }
+ summary();
+ document.getElementById('co').onsubmit=e=>{ e.preventDefault(); const f=QCart.fees(); if(f.sub<D.intl.minOrderUsd){return;} const g=id=>document.getElementById(id).value.trim();
+  const id='W'+Date.now().toString().slice(-6); const lines=QCart.cart().map(l=>{const p=D.products.find(x=>x.handle===l.handle);return {id:p.handle,qty:l.qty,opts:'',price:p.price,name:L(p.name)}});
+  const addr=[g('street'),g('city')+' '+g('postal'),L(f.c.name)].join(', ');
+  const order={id,ts:Date.now(),status:'received',branch:'intl',type:'intl',country:f.c.code,weight:f.w,lines:lines.map(l=>({id:l.id,qty:l.qty,opts:'',price:l.price,name:l.name})),customer:{name:g('name'),phone:g('phone'),email:g('email'),verified:false,address:addr},notes:g('notes'),subtotal:f.sub,delivery:f.ship,discount:0,total:f.total,pay:'card',source:'website',eta:eta(f.c.days)};
+  try{const k='qasr_orders_v1';const o=JSON.parse(localStorage.getItem(k)||'[]');o.unshift(order);localStorage.setItem(k,JSON.stringify(o));}catch(x){}
+  const msg=`${lang==='ar'?'طلب دولي من الموقع':'International order from the website'} #${id}\n${lines.map(l=>`${l.qty}× ${l.name} — ${money(l.price*l.qty)}`).join('\n')}\n${T.sub}: ${money(f.sub)}\n${T.ship} (${f.w} kg, ${f.c.code}): ${f.ship?money(f.ship):T.free}\n${T.tot}: ${money(f.total)}\n\n${g('name')} · ${g('phone')} · ${g('email')}\n${addr}${g('notes')?'\n'+g('notes'):''}`;
+  const wa=`https://wa.me/${document.body.dataset.wa}?text=${encodeURIComponent(msg)}`;
+  document.getElementById('co').hidden=true; const d=document.getElementById('done'); d.hidden=false; document.getElementById('doneSub').textContent=`${T.sent} #${id} · ${money(f.total)} · ${T.arr} ${eta(f.c.days)}`; document.getElementById('doneWa').href=wa; QCart.clear(); window.scrollTo({top:0,behavior:'smooth'}); try{window.open(wa,'_blank');}catch(x){} };
+});
+</script>
+</Base>

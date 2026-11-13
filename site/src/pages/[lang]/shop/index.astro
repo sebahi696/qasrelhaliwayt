@@ -1,0 +1,18 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { langs, t, L, money, type Lang } from '../../../i18n';
+import shop from '../../../data/shop.json';
+import menu from '../../../data/menu.json';
+export function getStaticPaths() { return langs.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const I = menu.intl;
+---
+<Base lang={lang} title={t(lang,'shop_title')} description={t(lang,'shop_sub') + ' ' + t(lang,'ship_note')} path="shop" shop>
+<div class="wrap" style="padding-top:36px"><div class="eyebrow">DHL Express</div><h1 class="disp" style="font-size:44px;margin:6px 0 8px">{t(lang,'shop_title')}</h1><p class="muted" style="margin:0 0 14px;max-width:70ch">{t(lang,'shop_sub')}</p>
+<div class="card" style="padding:14px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:22px"><span style="font-size:26px">📦</span><div style="flex:1;min-width:240px;font-size:14px">{t(lang,'ship_note')}</div><a class="btn o sm" href={`${base}/${lang}/shipping/`}>{t(lang,'shipping_title')} →</a></div>
+<div class="cats">{shop.categories.map(c => <a class="catchip" href={`#${c.id}`}>{L(c.name,lang)}</a>)}<a class="catchip" href={`${base}/${lang}/menu/`}>🇱🇧 {t(lang,'in_lebanon')}</a></div>
+{shop.categories.map(c => <section id={c.id} style="padding-top:26px"><h2 class="disp" style="font-size:30px;margin:0 0 14px">{L(c.name,lang)}</h2><div class="grid c4">{shop.products.filter(p => p.cat === c.id).map(p => <div class="card pcard"><a href={`${base}/${lang}/shop/${p.handle}/`} class="ph" style="display:block">{p.images[0] ? <img src={`${base}${p.images[0]}`} alt={L(p.name,lang)} loading="lazy" width="400" height="400"/> : <div class="e">🍯</div>}</a><div class="b"><a href={`${base}/${lang}/shop/${p.handle}/`} class="n" style="text-decoration:none">{L(p.name,lang)}</a><div class="d">{p.weightKg} kg · {t(lang,'in_stock')}</div><div class="row" style="justify-content:space-between;margin-top:6px"><div class="pr money" style="margin:0">{money(p.price)} <small>{p.unit==='dozen'?t(lang,'per_dozen'):t(lang,'per_kg')}</small></div><button class="btn p sm" data-add={p.handle}>+ {t(lang,'add')}</button></div></div></div>)}</div></section>)}
+<section class="sec"><h2 class="disp" style="font-size:28px">{t(lang,'ship_to')}</h2><div class="grid c4" style="margin-top:12px">{I.countries.filter(c => c.enabled).map(c => <div class="card" style="padding:14px;display:flex;gap:12px;align-items:center"><span style="font-size:28px">{c.flag}</span><div><b>{L(c.name,lang)}</b><div class="muted" style="font-size:12.5px">{money(c.base)} {t(lang,'first_kg')} {money(c.ratePerKg)} {t(lang,'each_kg')} · {c.days} {t(lang,'days')}</div></div></div>)}</div></section>
+</div>
+<script is:inline>document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('[data-add]').forEach(b=>b.onclick=()=>QCart.add(b.dataset.add,1));});</script>
+</Base>

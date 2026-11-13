@@ -1,0 +1,504 @@
+{
+ "categories": [
+  {
+   "id": "baklava",
+   "name": {
+    "en": "Baklava",
+    "ar": "بقلاوة"
+   }
+  },
+  {
+   "id": "maamoul",
+   "name": {
+    "en": "Maamoul",
+    "ar": "معمول"
+   }
+  },
+  {
+   "id": "maamoul-mad",
+   "name": {
+    "en": "Maamoul Mad",
+    "ar": "معمول مد"
+   }
+  }
+ ],
+ "products": [
+  {
+   "handle": "maamoul-mad-mix",
+   "name": {
+    "en": "Maamoul Mad Mix 1kg",
+    "ar": "مد مشكل"
+   },
+   "price": 18,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "maamoul-mad",
+   "desc": {
+    "en": "Mamoul Mad Mix is a rich selection of traditional Arabic sweets, filled with Dates, Pistachios, and Walnuts, bringing together the finest flavors of the Middle East in every bite. Perfect for: Weddings, birthdays, corporate events, and family gatherings Availability: Freshly prepared daily – available for worldwide shipping. Customization: Choose from a variety of fillings (Pistachio, Walnut, Date",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/maamoul-mad-mix-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "bourma-kg",
+   "name": {
+    "en": "Bourma",
+    "ar": "برما فستق"
+   },
+   "price": 55,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/bourma-kg-1.webp",
+    "/img/shop/bourma-kg-2.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "nabilsiyah-cashew-kg",
+   "name": {
+    "en": "Nabilsiyah Cashew",
+    "ar": "نابلسية كاجو"
+   },
+   "price": 30,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/nabilsiyah-cashew-kg-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "mad-dates",
+   "name": {
+    "en": "Mad Dates",
+    "ar": "مد تمر"
+   },
+   "price": 16,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "maamoul-mad",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/mad-dates-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "mad-wallnuts",
+   "name": {
+    "en": "Mad Wallnuts",
+    "ar": "مد جوز"
+   },
+   "price": 24,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "maamoul-mad",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/mad-wallnuts-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "mad-pistachio",
+   "name": {
+    "en": "Mad Pistachio",
+    "ar": "مد فستق"
+   },
+   "price": 28,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "maamoul-mad",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/mad-pistachio-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "mixed-maamoul-madd-1",
+   "name": {
+    "en": "Mixed Maamoul Mad",
+    "ar": "مد مشكل"
+   },
+   "price": 20,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "maamoul-mad",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/mixed-maamoul-madd-1-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "sfouf",
+   "name": {
+    "en": "Sfouf",
+    "ar": "صفوف"
+   },
+   "price": 16,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/sfouf-1.webp",
+    "/img/shop/sfouf-2.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "hadaf",
+   "name": {
+    "en": "Hadaf Walnuts",
+    "ar": "هدف جوز"
+   },
+   "price": 28,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/hadaf-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "kol-w-shkor-asabeh",
+   "name": {
+    "en": "Kol w Shkor + Asabeh",
+    "ar": "كل واشكر + أصابع"
+   },
+   "price": 21,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/kol-w-shkor-asabeh-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "nabilsiyah",
+   "name": {
+    "en": "Nabilsiyah Pistachio",
+    "ar": "نابلسية فستق"
+   },
+   "price": 40,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/nabilsiyah-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "basma-1",
+   "name": {
+    "en": "Basma",
+    "ar": "بسمة"
+   },
+   "price": 25,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/basma-1-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "asabeh",
+   "name": {
+    "en": "Asabeh",
+    "ar": "أصابع"
+   },
+   "price": 28,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "Asabeh arabic crunchy sweet comes with walnut",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/asabeh-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "kol-w-shkor",
+   "name": {
+    "en": "Kol w Shkor",
+    "ar": "كل واشكر"
+   },
+   "price": 28,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "Crunchy Kol W Shkor that's fill with Cashew!",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/kol-w-shkor-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "mixed-maamoul-madd",
+   "name": {
+    "en": "Mixed Maamoul",
+    "ar": "معمول مشكل (دزينة)"
+   },
+   "price": 20,
+   "unit": "dozen",
+   "weightKg": 0.6,
+   "cat": "maamoul",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/mixed-maamoul-madd-1.webp",
+    "/img/shop/mixed-maamoul-madd-2.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "maamoul-pistachio",
+   "name": {
+    "en": "Maamoul Pistachio",
+    "ar": "معمول فستق (دزينة)"
+   },
+   "price": 16,
+   "unit": "dozen",
+   "weightKg": 0.6,
+   "cat": "maamoul",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/maamoul-pistachio-1.webp",
+    "/img/shop/maamoul-pistachio-2.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "maamoul-walnuts",
+   "name": {
+    "en": "Maamoul Walnuts",
+    "ar": "معمول جوز (دزينة)"
+   },
+   "price": 20,
+   "unit": "dozen",
+   "weightKg": 0.6,
+   "cat": "maamoul",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/maamoul-walnuts-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "maamoul-dates",
+   "name": {
+    "en": "Maamoul Dates",
+    "ar": "معمول تمر (دزينة)"
+   },
+   "price": 15,
+   "unit": "dozen",
+   "weightKg": 0.6,
+   "cat": "maamoul",
+   "desc": {
+    "en": "Large pieces of Maamoul Dates comes per Dozen",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/maamoul-dates-1.webp",
+    "/img/shop/maamoul-dates-2.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "maamoul-walnuts-soire",
+   "name": {
+    "en": "Maamoul Walnuts Soire",
+    "ar": "معمول سواريه جوز"
+   },
+   "price": 25,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "maamoul",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/maamoul-walnuts-soire-1.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "maamoul-pistacio-soire",
+   "name": {
+    "en": "Maamoul Pistachio Soire",
+    "ar": "معمول سواريه فستق"
+   },
+   "price": 30,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "maamoul",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/maamoul-pistacio-soire-1.webp",
+    "/img/shop/maamoul-pistacio-soire-2.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "maamoul-dates-soire",
+   "name": {
+    "en": "Maamoul Dates Soire",
+    "ar": "معمول سواريه تمر"
+   },
+   "price": 20,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "maamoul",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/maamoul-dates-soire-1.webp",
+    "/img/shop/maamoul-dates-soire-2.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "mixed-maamoul-soire",
+   "name": {
+    "en": "Mixed Maamoul Soire",
+    "ar": "معمول سواريه مشكل"
+   },
+   "price": 25,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "maamoul",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/mixed-maamoul-soire-1.webp",
+    "/img/shop/mixed-maamoul-soire-2.webp"
+   ],
+   "available": true
+  },
+  {
+   "handle": "product-123",
+   "name": {
+    "en": "Baklava Mix",
+    "ar": "بقلاوة مشكل"
+   },
+   "price": 28,
+   "unit": "kg",
+   "weightKg": 1,
+   "cat": "baklava",
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "images": [
+    "/img/shop/product-123-1.webp",
+    "/img/shop/product-123-2.webp",
+    "/img/shop/product-123-3.webp"
+   ],
+   "available": true
+  }
+ ],
+ "collections": [
+  {
+   "handle": "sugar-free",
+   "title": "ASHTAYEET"
+  },
+  {
+   "handle": "baklava",
+   "title": "BAKLAVA"
+  },
+  {
+   "handle": "kashtawet",
+   "title": "KASHTAWET"
+  },
+  {
+   "handle": "kunafa",
+   "title": "KUNAFA"
+  },
+  {
+   "handle": "maamoul",
+   "title": "MAAMOUL"
+  },
+  {
+   "handle": "maamoul-mad",
+   "title": "MAAMOUL MAD"
+  },
+  {
+   "handle": "plates-1",
+   "title": "PLATES"
+  }
+ ]
+}

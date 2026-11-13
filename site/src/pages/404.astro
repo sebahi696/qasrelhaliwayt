@@ -1,0 +1,7 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base lang="en" title="Page not found" description="This page could not be found." path="404" noindex>
+<div class="wrap" style="padding:80px 0;text-align:center"><div style="font-size:60px">🍯</div><h1 class="disp" style="font-size:40px">Page not found</h1><p class="muted">The page moved when we rebuilt the website. Try the menu or the shop.</p><div class="row" style="justify-content:center;margin-top:16px"><a class="btn p" href={`${base}/en/menu/`}>Menu</a><a class="btn o" href={`${base}/en/shop/`}>International shop</a></div></div>
+</Base>

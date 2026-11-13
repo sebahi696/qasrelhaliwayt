@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import { langs, t, type Lang } from '../../i18n';
+export function getStaticPaths() { return langs.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const en = { d: 'Since 1980, Bilal and Abdullah Al Masri and their family have made Tripoli-style Arabic sweets on Mallah Street in Beirut.', p1: 'Since Arabic sweets are an essential part of Lebanese culture and traditions, Mr. Bilal Al Masri and his family from Tripoli decided to bring Tripoli’s sweet heritage together with a twist of Beirut’s flavor, creating perfection under the name Qasr El Halaweyat El Arabiye.', p2: 'In 1980, Mr. Bilal and his family opened their first modest Arabic sweets shop in the heart of Beirut, on Mallah Street, offering freshly made homemade sweets to the surrounding community.', p3: 'After years of dedication and success, Qasr El Halaweyat El Arabiye became one of the leading Arabic sweets makers in Lebanon, and expanded with branches in Corniche El Mazraa and Aramoun, and to the Mina region.', m: 'To bring sweet moments of Arabic happiness to our customers every day, while creating a welcoming environment and serving satisfaction to their cravings.', v: 'To be one of the leading traditional Arabic sweets makers in the Mina region, with our team of sweet experts, while maintaining our high quality standards.' };
+const ar = { d: 'منذ عام ١٩٨٠، يصنع بلال وعبدالله المصري وعائلتهما الحلويات العربية الطرابلسية في شارع الملا في بيروت.', p1: 'لأن الحلويات العربية جزء أساسي من الثقافة والتقاليد اللبنانية، قرر السيد بلال المصري وعائلته من طرابلس جمع أصالة طرابلس بنكهة بيروت تحت اسم قصر الحلويات العربية.', p2: 'في عام ١٩٨٠ افتتح السيد بلال وعائلته أول محل متواضع للحلويات العربية في قلب بيروت، في شارع الملا، مقدّمين حلويات بيتية طازجة لأهل الحي.', p3: 'بعد سنوات من الجهد والنجاح، أصبح قصر الحلويات العربية من أبرز صانعي الحلويات العربية في لبنان، وتوسّع بفروع في كورنيش المزرعة وعرمون وإلى منطقة الميناء.', m: 'أن نقدّم لحظات حلوة من السعادة العربية لزبائننا كل يوم، مع بيئة مرحّبة وإشباع لرغباتهم.', v: 'أن نكون من الروّاد في صناعة الحلويات العربية التقليدية في منطقة الميناء، مع فريق خبراء الحلويات، والحفاظ على معاييرنا العالية.' };
+const c = lang === 'ar' ? ar : en;
+---
+<Base lang={lang} title={t(lang,'about_title')} description={c.d} path="about" image={`${base}/img/menu/banner.webp`}>
+<div class="wrap" style="padding-top:36px"><div class="eyebrow">1980 · Beirut</div><h1 class="disp" style="font-size:46px;margin:6px 0 18px">{t(lang,'about_title')}</h1>
+<img src={`${base}/img/menu/banner.webp`} alt="" style="border-radius:24px;aspect-ratio:21/9;object-fit:cover;width:100%;margin-bottom:26px" width="1200" height="514">
+<div class="prose"><p>{c.p1}</p><p>{c.p2}</p><p>{c.p3}</p><h2 class="disp">{t(lang,'mission')}</h2><p>{c.m}</p><h2 class="disp">{t(lang,'vision')}</h2><p>{c.v}</p></div>
+<div class="row" style="margin-top:26px"><a class="btn p" href={`${base}/${lang}/menu/`}>{t(lang,'cta_menu')}</a><a class="btn o" href={`${base}/${lang}/branches/`}>{t(lang,'nav_branches')}</a></div></div>
+</Base>

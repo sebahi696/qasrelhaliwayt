@@ -1,0 +1,12 @@
+---
+import Base from '../../layouts/Base.astro';
+import { langs, t, type Lang } from '../../i18n';
+export function getStaticPaths() { return langs.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang;
+const en = ['We collect only what an order needs: your name, phone number, email and delivery address. We use them to prepare, confirm and deliver your order and to send you its tracking.', 'We never sell or share your data with third parties, except the carriers (DHL, our drivers) and payment providers needed to fulfil your order.', 'The app keeps your order history and loyalty points on your account. You can ask us to delete your account and its data at any time by emailing info@qasralhalaweyat.com.', 'The website uses no advertising cookies. It stores your cart and language preference in your browser only.'];
+const ar = ['نجمع فقط ما يحتاجه الطلب: اسمك ورقم هاتفك وبريدك وعنوان التوصيل. نستخدمها لتحضير طلبك وتأكيده وتوصيله وإرسال رقم التتبع.', 'لا نبيع بياناتك ولا نشاركها مع أطراف ثالثة، باستثناء شركات الشحن (DHL، سائقونا) ومزوّدي الدفع اللازمين لتنفيذ طلبك.', 'يحفظ التطبيق سجل طلباتك ونقاطك في حسابك. يمكنك طلب حذف حسابك وبياناته في أي وقت عبر البريد info@qasralhalaweyat.com.', 'لا يستخدم الموقع ملفات تعريف إعلانية. يحفظ سلتك ولغتك في متصفحك فقط.'];
+const ps = lang === 'ar' ? ar : en;
+---
+<Base lang={lang} title={t(lang,'privacy')} description={ps[0]} path="privacy">
+<div class="wrap" style="padding-top:36px"><h1 class="disp" style="font-size:44px;margin:0 0 18px">{t(lang,'privacy')}</h1><div class="prose">{ps.map(p => <p>{p}</p>)}</div></div>
+</Base>

@@ -1,0 +1,15 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import { langs, t, L, money, type Lang } from '../../../../i18n';
+import menu from '../../../../data/menu.json';
+export function getStaticPaths() { return langs.flatMap(lang => menu.categories.map((c: any) => ({ params: { lang, cat: c.id }, props: { c } }))); }
+const lang = Astro.params.lang as Lang; const { c } = Astro.props as any; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const items = menu.items.filter((i: any) => i.cat === c.id); const half = c.id === 'kilo';
+const desc = lang === 'ar' ? `${L(c.name,lang)} من قصر الحلويات العربية في بيروت — ${items.length} صنف مع الأسعار.` : `${L(c.name,lang)} from Qasr Al Halaweyat, Beirut — ${items.length} items with prices. ${c.intl ? 'Ships worldwide by DHL.' : 'Delivery and pickup in Lebanon.'}`;
+---
+<Base lang={lang} title={L(c.name,lang)} description={desc} path={`menu/${c.id}`} image={items.find((i:any)=>i.img)?.img ? `${base}${items.find((i:any)=>i.img).img}` : undefined}>
+<div class="wrap" style="padding-top:36px"><a href={`${base}/${lang}/menu/`} class="muted" style="text-decoration:none;font-size:14px">← {t(lang,'menu_title')}</a><h1 class="disp" style="font-size:44px;margin:8px 0 6px">{c.emoji} {L(c.name,lang)}</h1><div class="row" style="margin-bottom:18px"><span class={`chip ${c.intl?'ind':''}`}>{c.intl ? '✈️ ' + t(lang,'ships') : '🇱🇧 ' + t(lang,'in_lebanon')}</span><span class="muted">{items.length}</span></div>
+<div class="grid c4">{items.map((i: any) => <a class="card pcard" href={`${base}/${lang}/menu/${c.id}/${i.id}/`}><div class="ph">{i.img ? <img src={`${base}${i.img}`} alt={L(i.name,lang)} loading="lazy" width="400" height="400"/> : <div class="e">{c.emoji}</div>}</div><div class="b"><div class="n">{L(i.name,lang)}</div>{L(i.desc,lang) && <div class="d">{L(i.desc,lang)}</div>}<div class="pr money">{money(i.price)} {half && <small>{t(lang,'per_half')}</small>}</div></div></a>)}</div>
+{!c.intl && <div class="card" style="margin-top:26px;padding:22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:var(--indigo);color:#fff;border:0"><div style="flex:1;min-width:240px"><b style="font-size:19px;display:block">{t(lang,'lb_title')}</b><span style="opacity:.9">{t(lang,'lb_sub')}</span></div><a class="btn g" href={`${base}/app/`}>{t(lang,'cta_app')}</a><a class="btn wa" href={`https://wa.me/${menu.branches[0].wa}`} target="_blank" rel="noopener">💬 WhatsApp</a></div>}
+</div>
+</Base>

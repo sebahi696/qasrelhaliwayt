@@ -1,0 +1,23 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import { langs, t, L, money, type Lang } from '../../../../i18n';
+import menu from '../../../../data/menu.json';
+export function getStaticPaths() { return langs.flatMap(lang => menu.items.map((i: any) => ({ params: { lang, cat: i.cat, item: String(i.id) }, props: { i, c: menu.categories.find((c: any) => c.id === i.cat) } }))); }
+const lang = Astro.params.lang as Lang; const { i, c } = Astro.props as any; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const half = c.id === 'kilo'; const related = menu.items.filter((x: any) => x.cat === c.id && x.id !== i.id && x.img).slice(0, 4);
+const desc = L(i.desc,lang) || (lang === 'ar' ? `${L(i.name,lang)} من ${L(c.name,lang)} — قصر الحلويات العربية، بيروت.` : `${L(i.name,lang)} from our ${L(c.name,lang)} — Qasr Al Halaweyat, Beirut. ${money(i.price)}${half ? ' per ½ kg' : ''}.`);
+const jsonld = [{ '@context': 'https://schema.org', '@type': 'Product', name: i.name.en, image: i.img ? `${Astro.site}${i.img.replace(/^\//,'')}` : undefined, description: i.desc.en || desc, brand: { '@type': 'Brand', name: 'Qasr Al Halaweyat' }, offers: { '@type': 'Offer', price: i.price, priceCurrency: 'USD', availability: i.available ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock', areaServed: c.intl ? undefined : 'LB' } }];
+---
+<Base lang={lang} title={L(i.name,lang)} description={desc} path={`menu/${c.id}/${i.id}`} image={i.img ? `${base}${i.img}` : undefined} jsonld={jsonld}>
+<div class="wrap" style="padding-top:36px"><a href={`${base}/${lang}/menu/${c.id}/`} class="muted" style="text-decoration:none;font-size:14px">← {L(c.name,lang)}</a>
+<div class="grid c2" style="margin-top:12px;gap:36px;align-items:start">
+  <div class="card" style="overflow:hidden;aspect-ratio:1;background:var(--gold-soft)">{i.img ? <img src={`${base}${i.img}`} alt={L(i.name,lang)} style="width:100%;height:100%;object-fit:cover" width="640" height="640"/> : <div style="display:grid;place-items:center;height:100%;font-size:80px">{c.emoji}</div>}</div>
+  <div><span class={`chip ${c.intl?'ind':''}`}>{c.intl ? '✈️ ' + t(lang,'ships') : '🇱🇧 ' + t(lang,'in_lebanon')}</span><h1 class="disp" style="font-size:42px;margin:12px 0 8px">{L(i.name,lang)}</h1><div class="money" style="font-size:26px;font-weight:800;color:var(--indigo)">{money(i.price)} {half && <small class="muted" style="font-size:15px;font-weight:600">{t(lang,'per_half')}</small>}</div>
+  {L(i.desc,lang) && <p class="muted" style="font-size:17px;line-height:1.7">{L(i.desc,lang)}</p>}
+  <div class="row" style="margin-top:18px"><a class="btn g" href={`${base}/app/`}>{t(lang,'cta_app')}</a><a class="btn wa" href={`https://wa.me/${menu.branches[0].wa}?text=${encodeURIComponent(t(lang,'whatsapp_msg') + ' ' + L(i.name,lang))}`} target="_blank" rel="noopener">💬 {t(lang,'cta_whatsapp')}</a></div>
+  {c.intl && <p class="muted" style="font-size:14px;margin-top:14px">✈️ <a href={`${base}/${lang}/shop/`}>{t(lang,'shop_title')}</a></p>}
+  <p class="muted" style="font-size:13px;margin-top:22px">{menu.branches.map((b: any) => L(b.name,lang)).join(' · ')}</p></div>
+</div>
+{related.length > 0 && <section class="sec"><div class="sec-h"><h2 class="disp" style="font-size:28px">{t(lang,'related')}</h2></div><div class="grid c4">{related.map((r: any) => <a class="card pcard" href={`${base}/${lang}/menu/${c.id}/${r.id}/`}><div class="ph"><img src={`${base}${r.img}`} alt={L(r.name,lang)} loading="lazy" width="400" height="400"/></div><div class="b"><div class="n">{L(r.name,lang)}</div><div class="pr money">{money(r.price)}</div></div></a>)}</div></section>}
+</div>
+</Base>

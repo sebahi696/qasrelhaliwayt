@@ -1,0 +1,16 @@
+---
+import Base from '../../layouts/Base.astro';
+import { langs, t, L, type Lang } from '../../i18n';
+import menu from '../../data/menu.json';
+export function getStaticPaths() { return langs.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base lang={lang} title={t(lang,'contact_title')} description={t(lang,'contact_sub')} path="contact">
+<div class="wrap" style="padding-top:36px"><h1 class="disp" style="font-size:44px;margin:0 0 8px">{t(lang,'contact_title')}</h1><p class="muted" style="max-width:60ch;margin:0 0 22px">{t(lang,'contact_sub')}</p>
+<div class="grid c2" style="align-items:start">
+  <div class="card" style="padding:22px"><div class="eyebrow" style="margin-bottom:10px">{t(lang,'sec_branches')}</div>{menu.branches.map((b: any) => <div style="padding:10px 0;border-bottom:1px solid var(--line)"><b>{L(b.name,lang)}</b><div class="muted" style="font-size:13.5px">{L(b.area,lang)} · {L(b.hours,lang)}</div><div class="row" style="margin-top:6px"><a class="btn sm o" href={`tel:+961${b.phone.replace(/\D/g,'').replace(/^0/,'')}`}>📞 {b.phone}</a><a class="btn sm wa" href={`https://wa.me/${b.wa}`} target="_blank" rel="noopener">WhatsApp</a></div></div>)}
+  <div style="padding:12px 0 0"><b>Email</b><div class="muted" style="font-size:14px"><a href="mailto:info@qasralhalaweyat.com">info@qasralhalaweyat.com</a> · <a href="mailto:sales@qasralhalaweyat.com">sales@qasralhalaweyat.com</a></div></div></div>
+  <form class="card" style="padding:22px;display:grid;gap:12px" id="cf"><div class="eyebrow">{lang==='ar'?'أرسل رسالة':'Send a message'}</div><div class="field"><label>{t(lang,'name')}</label><input id="cfName" required></div><div class="field"><label>{t(lang,'phone')} / Email</label><input id="cfContact" required></div><div class="field"><label>{lang==='ar'?'الرسالة':'Message'}</label><textarea id="cfMsg" rows="4" required></textarea></div><button class="btn p" type="submit">💬 {lang==='ar'?'إرسال عبر واتساب':'Send via WhatsApp'}</button><p class="muted" style="font-size:12.5px;margin:0">{lang==='ar'?'تُفتح رسالتك في واتساب جاهزة للإرسال.':'Your message opens in WhatsApp, ready to send.'}</p></form>
+</div></div>
+<script is:inline>document.getElementById('cf').onsubmit=e=>{e.preventDefault();const g=i=>document.getElementById(i).value.trim();window.open(`https://wa.me/${document.body.dataset.wa}?text=${encodeURIComponent(g('cfName')+' ('+g('cfContact')+')\n'+g('cfMsg'))}`,'_blank');};</script>
+</Base>

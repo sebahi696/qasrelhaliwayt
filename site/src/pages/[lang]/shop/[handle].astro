@@ -1,0 +1,32 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { langs, t, L, money, type Lang } from '../../../i18n';
+import shop from '../../../data/shop.json';
+import menu from '../../../data/menu.json';
+export function getStaticPaths() { return langs.flatMap(lang => shop.products.map(p => ({ params: { lang, handle: p.handle }, props: { p } }))); }
+const lang = Astro.params.lang as Lang; const { p } = Astro.props as any; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const c = shop.categories.find(x => x.id === p.cat)!; const related = shop.products.filter(x => x.cat === p.cat && x.handle !== p.handle && x.images.length).slice(0, 4);
+const desc = L(p.desc,lang) || (lang==='ar' ? `${L(p.name,lang)} — ${L(c.name,lang)} من قصر الحلويات العربية، تُشحن عبر DHL. ${money(p.price)} ${p.unit==='dozen'?'للدزينة':'للكيلو'}.` : `${L(p.name,lang)} — ${L(c.name,lang)} from Qasr Al Halaweyat, Beirut. Vacuum-sealed and shipped worldwide by DHL Express. ${money(p.price)} per ${p.unit}.`);
+const jsonld = [{ '@context': 'https://schema.org', '@type': 'Product', name: p.name.en, image: p.images.map((i: string) => `${Astro.site}${i.replace(/^\//,'')}`), description: p.desc.en || desc, brand: { '@type': 'Brand', name: 'Qasr Al Halaweyat' }, sku: p.handle, offers: { '@type': 'Offer', url: `${Astro.site}${lang}/shop/${p.handle}/`, price: p.price, priceCurrency: 'USD', availability: 'https://schema.org/InStock', shippingDetails: { '@type': 'OfferShippingDetails', shippingDestination: menu.intl.countries.filter((x: any) => x.enabled).map((x: any) => ({ '@type': 'DefinedRegion', addressCountry: x.code })) } } }];
+---
+<Base lang={lang} title={L(p.name,lang)} description={desc} path={`shop/${p.handle}`} image={p.images[0] ? `${base}${p.images[0]}` : undefined} jsonld={jsonld} shop>
+<div class="wrap" style="padding-top:36px"><a href={`${base}/${lang}/shop/`} class="muted" style="text-decoration:none;font-size:14px">← {t(lang,'shop_title')}</a>
+<div class="grid c2" style="margin-top:12px;gap:36px;align-items:start">
+  <div><div class="card" style="overflow:hidden;aspect-ratio:1;background:var(--gold-soft)">{p.images[0] ? <img id="mainImg" src={`${base}${p.images[0]}`} alt={L(p.name,lang)} style="width:100%;height:100%;object-fit:cover" width="800" height="800"/> : <div style="display:grid;place-items:center;height:100%;font-size:80px">🍯</div>}</div>
+  {p.images.length > 1 && <div class="row" style="margin-top:10px">{p.images.map((im: string) => <img src={`${base}${im}`} alt="" width="72" height="72" style="width:72px;height:72px;border-radius:12px;object-fit:cover;cursor:pointer;border:2px solid var(--line)" data-thumb={`${base}${im}`}/>)}</div>}</div>
+  <div><span class="chip ind">✈️ {t(lang,'ships')}</span><h1 class="disp" style="font-size:42px;margin:12px 0 8px">{L(p.name,lang)}</h1><div class="money" style="font-size:26px;font-weight:800;color:var(--indigo)">{money(p.price)} <small class="muted" style="font-size:15px;font-weight:600">{p.unit==='dozen'?t(lang,'per_dozen'):t(lang,'per_kg')}</small></div>
+  <p class="muted" style="font-size:17px;line-height:1.7">{desc}</p>
+  <ul class="muted" style="font-size:14px;line-height:1.9;padding-inline-start:18px"><li>{t(lang,'weight')}: {p.weightKg} kg</li><li>{t(lang,'gift_tin')}</li><li>{t(lang,'ship_note')}</li></ul>
+  <div class="row" style="margin-top:14px"><div class="q" style="display:inline-flex;align-items:center;border:1.5px solid var(--line);border-radius:14px;height:50px;background:var(--paper)"><button id="qm" style="width:46px;height:100%;font-size:20px;font-weight:700">−</button><span id="qv" style="min-width:28px;text-align:center;font-weight:800">1</span><button id="qp" style="width:46px;height:100%;font-size:20px;font-weight:700">+</button></div><button class="btn g" id="addBtn" style="flex:1">{t(lang,'add')}</button></div>
+  <p class="muted" style="font-size:13px;margin-top:16px">🇱🇧 {lang==='ar'?'في لبنان؟':'In Lebanon?'} <a href={`${base}/app/`}>{t(lang,'cta_app')}</a></p></div>
+</div>
+{related.length > 0 && <section class="sec"><div class="sec-h"><h2 class="disp" style="font-size:28px">{t(lang,'related')}</h2></div><div class="grid c4">{related.map((r: any) => <a class="card pcard" href={`${base}/${lang}/shop/${r.handle}/`}><div class="ph"><img src={`${base}${r.images[0]}`} alt={L(r.name,lang)} loading="lazy" width="400" height="400"/></div><div class="b"><div class="n">{L(r.name,lang)}</div><div class="pr money">{money(r.price)} <small>{r.unit==='dozen'?t(lang,'per_dozen'):t(lang,'per_kg')}</small></div></div></a>)}</div></section>}
+</div>
+<script is:inline define:vars={{ handle: p.handle }}>
+document.addEventListener('DOMContentLoaded',()=>{
+let q=1;const qv=document.getElementById('qv');document.getElementById('qm').onclick=()=>{if(q>1){q--;qv.textContent=q;}};document.getElementById('qp').onclick=()=>{q++;qv.textContent=q;};
+document.getElementById('addBtn').onclick=()=>QCart.add(handle,q);
+document.querySelectorAll('[data-thumb]').forEach(i=>i.onclick=()=>{document.getElementById('mainImg').src=i.dataset.thumb;});
+});
+</script>
+</Base>

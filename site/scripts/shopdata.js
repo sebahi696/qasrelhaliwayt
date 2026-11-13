@@ -1,0 +1,1 @@
+const fs=require('fs');const shop=JSON.parse(fs.readFileSync('src/data/shop.json'));const menu=JSON.parse(fs.readFileSync('src/data/menu.json'));fs.writeFileSync('public/shop-data.json',JSON.stringify({products:shop.products.map(p=>({handle:p.handle,name:p.name,price:p.price,unit:p.unit,weightKg:p.weightKg,img:p.images[0]||null})),intl:menu.intl}));

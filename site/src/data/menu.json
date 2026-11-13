@@ -1,0 +1,1530 @@
+{
+ "categories": [
+  {
+   "id": "knefeh",
+   "name": {
+    "en": "Qasr Knefeh Specials",
+    "ar": "كنافة القصر"
+   },
+   "intl": false,
+   "emoji": "🧀"
+  },
+  {
+   "id": "platters",
+   "name": {
+    "en": "Platters",
+    "ar": "صحون"
+   },
+   "intl": false,
+   "emoji": "🍽️"
+  },
+  {
+   "id": "piece",
+   "name": {
+    "en": "Trabulsiyeh by Piece",
+    "ar": "حلويات طرابلسية بالقطعة"
+   },
+   "intl": false,
+   "emoji": "🍥"
+  },
+  {
+   "id": "kilo",
+   "name": {
+    "en": "Trabulsiyeh by Kilo",
+    "ar": "حلويات طرابلسية بالكيلو"
+   },
+   "intl": false,
+   "emoji": "⚖️"
+  },
+  {
+   "id": "maamoul",
+   "name": {
+    "en": "Maamoul & Mad",
+    "ar": "معمول ومد"
+   },
+   "intl": true,
+   "emoji": "🌙"
+  },
+  {
+   "id": "baklawa",
+   "name": {
+    "en": "Baklawa",
+    "ar": "بقلاوة"
+   },
+   "intl": true,
+   "emoji": "💛"
+  },
+  {
+   "id": "boxes",
+   "name": {
+    "en": "Boxes & Nuts",
+    "ar": "علب ومكسرات"
+   },
+   "intl": true,
+   "emoji": "🎁"
+  }
+ ],
+ "items": [
+  {
+   "id": 1327,
+   "cat": "knefeh",
+   "name": {
+    "en": "Kaake Cheese",
+    "ar": "كعكة جبنة"
+   },
+   "price": 3.33,
+   "img": "/img/menu/item_1327.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "Knefeh bil jibn in a sesame kaake, syrup on the side",
+    "ar": "كنافة بجبنة بالكعكة مع القطر"
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1328,
+   "cat": "knefeh",
+   "name": {
+    "en": "Kaake Ashta",
+    "ar": "كعكة قشطة"
+   },
+   "price": 3.33,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1329,
+   "cat": "knefeh",
+   "name": {
+    "en": "Kaake Cocktail",
+    "ar": "كعكة كوكتيل"
+   },
+   "price": 3.33,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "Half cheese, half ashta",
+    "ar": "نص جبنة نص قشطة"
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1330,
+   "cat": "knefeh",
+   "name": {
+    "en": "Lahmeh B Aajin",
+    "ar": "لحمة بعجين"
+   },
+   "price": 2.22,
+   "img": "/img/menu/item_1330.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "With mint and pomegranate molasses",
+    "ar": "مع نعنع ودبس الرمان"
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1332,
+   "cat": "knefeh",
+   "name": {
+    "en": "Knefeh Cheese Tray 2 kg",
+    "ar": "صينية كنافة جبنة ٢ كلغ"
+   },
+   "price": 40,
+   "img": "/img/menu/item_1332.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "With syrup and 12 kaake",
+    "ar": "مع قطر و١٢ كعكة"
+   },
+   "weightKg": 2.5
+  },
+  {
+   "id": 1403,
+   "cat": "knefeh",
+   "name": {
+    "en": "Knefeh ½ kg",
+    "ar": "كنافة نص كيلو"
+   },
+   "price": 10,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "Cheese",
+    "ar": "جبنة"
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1334,
+   "cat": "knefeh",
+   "name": {
+    "en": "Combo Ashta Kilo",
+    "ar": "كومبو قشطة كيلو"
+   },
+   "price": 20,
+   "img": "/img/menu/item_1334.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "Mafroukeh samra & khadra, othmaliyeh, halawet el jibn",
+    "ar": "تشكيلة من المفروكة السمرا والخضرا، عثملية، حلاوة"
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1336,
+   "cat": "platters",
+   "name": {
+    "en": "Halawet El Rez",
+    "ar": "حلاوة الرز"
+   },
+   "price": 4.44,
+   "img": "/img/menu/item_1336.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1337,
+   "cat": "platters",
+   "name": {
+    "en": "Halawet El Jibn Rolls",
+    "ar": "حلاوة الجبن لفايف"
+   },
+   "price": 5.5,
+   "img": "/img/menu/item_1337.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1338,
+   "cat": "platters",
+   "name": {
+    "en": "Halawet El Jibn Slices",
+    "ar": "حلاوة الجبن شرحات"
+   },
+   "price": 5.5,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1339,
+   "cat": "platters",
+   "name": {
+    "en": "Mad Ashta",
+    "ar": "مد قشطة"
+   },
+   "price": 4.44,
+   "img": "/img/menu/item_1339.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1340,
+   "cat": "platters",
+   "name": {
+    "en": "Mad Mix",
+    "ar": "مد مشكل"
+   },
+   "price": 4.4,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1341,
+   "cat": "platters",
+   "name": {
+    "en": "Mafroukeh Samra",
+    "ar": "مفروكة سمرا"
+   },
+   "price": 4.44,
+   "img": "/img/menu/item_1341.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1342,
+   "cat": "platters",
+   "name": {
+    "en": "Mafroukeh Khadra",
+    "ar": "مفروكة خضرا"
+   },
+   "price": 5.56,
+   "img": "/img/menu/item_1342.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1343,
+   "cat": "platters",
+   "name": {
+    "en": "Othmaliyeh",
+    "ar": "عثملية"
+   },
+   "price": 4.44,
+   "img": "/img/menu/item_1343.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1344,
+   "cat": "platters",
+   "name": {
+    "en": "Karabij with Natef",
+    "ar": "كرابيج مع ناطف"
+   },
+   "price": 5.56,
+   "img": "/img/menu/item_1344.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1345,
+   "cat": "platters",
+   "name": {
+    "en": "Baklawa Plate",
+    "ar": "صحن بقلاوة"
+   },
+   "price": 5.56,
+   "img": "/img/menu/item_1345.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1346,
+   "cat": "platters",
+   "name": {
+    "en": "Moufataka",
+    "ar": "مفتقة"
+   },
+   "price": 2.7,
+   "img": "/img/menu/item_1346.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 2798,
+   "cat": "platters",
+   "name": {
+    "en": "Hadaf Ramadan",
+    "ar": "هدف رمضان"
+   },
+   "price": 5.5,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1351,
+   "cat": "piece",
+   "name": {
+    "en": "Shoabeyat Ashta",
+    "ar": "شعيبيات قشطة"
+   },
+   "price": 1.5,
+   "img": "/img/menu/item_1351.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "Filled with fresh ashta",
+    "ar": "محشوة بالقشطة الطازجة"
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1352,
+   "cat": "piece",
+   "name": {
+    "en": "Shoabeyat bil Halib",
+    "ar": "شعيبيات بالحليب"
+   },
+   "price": 0.85,
+   "img": "/img/menu/item_1352.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "Filled with cooked milk",
+    "ar": "محشوة بالحليب المطبوخ"
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1353,
+   "cat": "piece",
+   "name": {
+    "en": "Katayef Asafiri 12 pcs",
+    "ar": "قطايف عصافيري ١٢ حبة"
+   },
+   "price": 8.3,
+   "img": "/img/menu/item_1353.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1354,
+   "cat": "piece",
+   "name": {
+    "en": "Pistachio Cup",
+    "ar": "كاسة فستق"
+   },
+   "price": 2.78,
+   "img": "/img/menu/item_1354.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 2799,
+   "cat": "piece",
+   "name": {
+    "en": "Halawet El Jibn Roll",
+    "ar": "لفة حلاوة جبن"
+   },
+   "price": 1.39,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1355,
+   "cat": "kilo",
+   "name": {
+    "en": "Karbouj Pistachio",
+    "ar": "كربوج فستق"
+   },
+   "price": 11.11,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1356,
+   "cat": "kilo",
+   "name": {
+    "en": "Karbouj Walnuts",
+    "ar": "كربوج جوز"
+   },
+   "price": 9.15,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1357,
+   "cat": "kilo",
+   "name": {
+    "en": "Karabij with Natef",
+    "ar": "كرابيج مع ناطف"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1357.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1358,
+   "cat": "kilo",
+   "name": {
+    "en": "Mafroukeh Samra",
+    "ar": "مفروكة سمرا"
+   },
+   "price": 8.89,
+   "img": "/img/menu/item_1358.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1359,
+   "cat": "kilo",
+   "name": {
+    "en": "Mafroukeh Khadra",
+    "ar": "مفروكة خضرا"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1359.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1360,
+   "cat": "kilo",
+   "name": {
+    "en": "Halawet El Jibn Slices",
+    "ar": "حلاوة الجبن شرحات"
+   },
+   "price": 8.89,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1361,
+   "cat": "kilo",
+   "name": {
+    "en": "Othmaliyeh",
+    "ar": "عثملية"
+   },
+   "price": 8.89,
+   "img": "/img/menu/item_1361.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1362,
+   "cat": "kilo",
+   "name": {
+    "en": "Maakaroun",
+    "ar": "معكرون"
+   },
+   "price": 5.5,
+   "img": "/img/menu/item_1362.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1363,
+   "cat": "kilo",
+   "name": {
+    "en": "Halawet El Rez",
+    "ar": "حلاوة الرز"
+   },
+   "price": 7.78,
+   "img": "/img/menu/item_1363.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1364,
+   "cat": "kilo",
+   "name": {
+    "en": "Ashta Trabulsiyeh",
+    "ar": "قشطة طرابلسية"
+   },
+   "price": 7.78,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1365,
+   "cat": "kilo",
+   "name": {
+    "en": "Moufataka",
+    "ar": "مفتقة"
+   },
+   "price": 5.55,
+   "img": "/img/menu/item_1365.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1373,
+   "cat": "maamoul",
+   "name": {
+    "en": "Sfouf",
+    "ar": "صفوف"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1373.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1374,
+   "cat": "maamoul",
+   "name": {
+    "en": "Namoura",
+    "ar": "نمورة"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1374.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1375,
+   "cat": "maamoul",
+   "name": {
+    "en": "Mad Ashta",
+    "ar": "مد قشطة"
+   },
+   "price": 15.56,
+   "img": "/img/menu/item_1375.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1376,
+   "cat": "maamoul",
+   "name": {
+    "en": "Mad Dates",
+    "ar": "مد تمر"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1376.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1377,
+   "cat": "maamoul",
+   "name": {
+    "en": "Mad Walnuts",
+    "ar": "مد جوز"
+   },
+   "price": 17.8,
+   "img": "/img/menu/item_1377.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1378,
+   "cat": "maamoul",
+   "name": {
+    "en": "Mad Pistachio",
+    "ar": "مد فستق"
+   },
+   "price": 20,
+   "img": "/img/menu/item_1378.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1379,
+   "cat": "maamoul",
+   "name": {
+    "en": "Mad Mix",
+    "ar": "مد مشكل"
+   },
+   "price": 14.44,
+   "img": "/img/menu/item_1379.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "Ashta, walnut, dates, pistachio, namoura, sfouf",
+    "ar": "مكون من مد: قشطة / جوز / تمر / فستق / نمورة / صفوف"
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1404,
+   "cat": "maamoul",
+   "name": {
+    "en": "Maamoul Soirée Dates",
+    "ar": "معمول سواريه تمر"
+   },
+   "price": 15.56,
+   "img": "/img/menu/item_1404.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "28 pieces per kg",
+    "ar": "الكيلو ٢٨ حبة"
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1405,
+   "cat": "maamoul",
+   "name": {
+    "en": "Maamoul Soirée Walnuts",
+    "ar": "معمول سواريه جوز"
+   },
+   "price": 20,
+   "img": "/img/menu/item_1405.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "28 pieces per kg",
+    "ar": "الكيلو ٢٨ حبة"
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1406,
+   "cat": "maamoul",
+   "name": {
+    "en": "Maamoul Soirée Pistachio",
+    "ar": "معمول سواريه فستق"
+   },
+   "price": 22.22,
+   "img": "/img/menu/item_1406.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "28 pieces per kg",
+    "ar": "الكيلو ٢٨ حبة"
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1407,
+   "cat": "maamoul",
+   "name": {
+    "en": "Maamoul Soirée Mix",
+    "ar": "معمول سواريه مشكل"
+   },
+   "price": 20,
+   "img": "/img/menu/item_1407.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "28 pieces per kg",
+    "ar": "الكيلو ٢٨ حبة"
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 2790,
+   "cat": "maamoul",
+   "name": {
+    "en": "Maamoul Mix 6 pcs",
+    "ar": "معمول مشكل ٦ حبات"
+   },
+   "price": 7.5,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "2 dates, 2 walnut, 2 pistachio",
+    "ar": "حبتين تمر، حبتين جوز، حبتين فستق"
+   },
+   "weightKg": 0.3
+  },
+  {
+   "id": 1380,
+   "cat": "baklawa",
+   "name": {
+    "en": "Baklawa Mix",
+    "ar": "بقلاوة مشكل"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1380.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1381,
+   "cat": "baklawa",
+   "name": {
+    "en": "Hadaf Ramadan",
+    "ar": "هدف رمضان"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1381.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1382,
+   "cat": "baklawa",
+   "name": {
+    "en": "Fingers Cashew",
+    "ar": "أصابع كاجو"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1382.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1383,
+   "cat": "baklawa",
+   "name": {
+    "en": "Borma Pistachio",
+    "ar": "برما فستق"
+   },
+   "price": 20,
+   "img": "/img/menu/item_1383.webp",
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1384,
+   "cat": "baklawa",
+   "name": {
+    "en": "Kol W Shkor Cashew",
+    "ar": "كل واشكر كاجو"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1384.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1385,
+   "cat": "baklawa",
+   "name": {
+    "en": "Nabulsiyeh Cashew",
+    "ar": "نابلسية كاجو"
+   },
+   "price": 11.11,
+   "img": "/img/menu/item_1385.webp",
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1386,
+   "cat": "baklawa",
+   "name": {
+    "en": "Basma",
+    "ar": "بسمة"
+   },
+   "price": 8.89,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1387,
+   "cat": "boxes",
+   "name": {
+    "en": "Mixed Nuts Small",
+    "ar": "مكسرات مشكلة صغير"
+   },
+   "price": 5,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.3
+  },
+  {
+   "id": 1388,
+   "cat": "boxes",
+   "name": {
+    "en": "Mixed Nuts Medium",
+    "ar": "مكسرات مشكلة وسط"
+   },
+   "price": 10,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.6
+  },
+  {
+   "id": 1389,
+   "cat": "boxes",
+   "name": {
+    "en": "Mixed Nuts Large",
+    "ar": "مكسرات مشكلة كبير"
+   },
+   "price": 16.67,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1390,
+   "cat": "boxes",
+   "name": {
+    "en": "Mixed Nuts Diet",
+    "ar": "مكسرات دايت"
+   },
+   "price": 12,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.6
+  },
+  {
+   "id": 1391,
+   "cat": "boxes",
+   "name": {
+    "en": "Mixed Nuts Krokan",
+    "ar": "مكسرات كروكان"
+   },
+   "price": 10,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.6
+  },
+  {
+   "id": 1392,
+   "cat": "boxes",
+   "name": {
+    "en": "Sesame Slices",
+    "ar": "سمسمية"
+   },
+   "price": 2.5,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.2
+  },
+  {
+   "id": 1393,
+   "cat": "boxes",
+   "name": {
+    "en": "Sesame & Pistachio Slices",
+    "ar": "سمسمية بالفستق"
+   },
+   "price": 3,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.2
+  },
+  {
+   "id": 1398,
+   "cat": "boxes",
+   "name": {
+    "en": "Belgian Chocolate Box",
+    "ar": "علبة شوكولا بلجيكي"
+   },
+   "price": 40,
+   "img": null,
+   "available": true,
+   "popular": true,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 1
+  },
+  {
+   "id": 1399,
+   "cat": "boxes",
+   "name": {
+    "en": "Lozania",
+    "ar": "لوزينة"
+   },
+   "price": 5.56,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.3
+  },
+  {
+   "id": 1400,
+   "cat": "boxes",
+   "name": {
+    "en": "Maamoul with Chocolate",
+    "ar": "معمول مغطس بالشوكولا"
+   },
+   "price": 16.67,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.8
+  },
+  {
+   "id": 1401,
+   "cat": "boxes",
+   "name": {
+    "en": "Medjool Dates ½ kg",
+    "ar": "تمر مجدول نص كيلو"
+   },
+   "price": 8.33,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "Jordanian Medjool",
+    "ar": "تمر مجدول أردني"
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 1402,
+   "cat": "boxes",
+   "name": {
+    "en": "Barazek & Ghraybeh",
+    "ar": "برازق وغريبة"
+   },
+   "price": 8.33,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.5
+  },
+  {
+   "id": 2795,
+   "cat": "boxes",
+   "name": {
+    "en": "Petit Four",
+    "ar": "بيتي فور"
+   },
+   "price": 16,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.8
+  },
+  {
+   "id": 1394,
+   "cat": "boxes",
+   "name": {
+    "en": "Cotton Candy Cup",
+    "ar": "غزل بنات كاسة"
+   },
+   "price": 1.11,
+   "img": null,
+   "available": true,
+   "popular": false,
+   "desc": {
+    "en": "",
+    "ar": ""
+   },
+   "weightKg": 0.1,
+   "intlOnly": false,
+   "noIntl": true
+  }
+ ],
+ "branches": [
+  {
+   "id": "malla",
+   "name": {
+    "en": "Malla · Beirut",
+    "ar": "الملا · بيروت"
+   },
+   "area": {
+    "en": "Algeria St, Sanayeh / Aisha Bakkar",
+    "ar": "شارع الجزائر، الصنائع / عائشة بكار"
+   },
+   "phone": "01 745 752",
+   "wa": "9613215616",
+   "hours": {
+    "en": "Mon–Sat 5:30 AM – 9 PM · Sun until 1 PM",
+    "ar": "الإثنين–السبت ٥:٣٠ ص – ٩ م · الأحد حتى ١ م"
+   },
+   "open": true,
+   "paused": false,
+   "deliveryFee": 1.67,
+   "minOrder": 5,
+   "eta": "25–35 min",
+   "lat": 33.8906,
+   "lng": 35.4893,
+   "main": true,
+   "zones": [
+    "Hamra",
+    "Sanayeh",
+    "Verdun",
+    "Ras Beirut",
+    "Ain El Mreisseh",
+    "Mazraa",
+    "Tallet El Khayat",
+    "Koraytem",
+    "Manara"
+   ]
+  },
+  {
+   "id": "mazraa",
+   "name": {
+    "en": "Corniche El Mazraa",
+    "ar": "كورنيش المزرعة"
+   },
+   "area": {
+    "en": "Corniche El Mazraa, Beirut",
+    "ar": "كورنيش المزرعة، بيروت"
+   },
+   "phone": "01 818 161",
+   "wa": "9613215616",
+   "hours": {
+    "en": "Daily 6 AM – 10 PM",
+    "ar": "يومياً ٦ ص – ١٠ م"
+   },
+   "open": true,
+   "paused": false,
+   "deliveryFee": 2,
+   "minOrder": 5,
+   "eta": "30–40 min",
+   "lat": 33.8778,
+   "lng": 35.496,
+   "zones": [
+    "Mazraa",
+    "Barbir",
+    "Tarik El Jdideh",
+    "Bachoura",
+    "Mar Elias",
+    "Dahye (Ghobeiry)",
+    "Chiyah"
+   ]
+  },
+  {
+   "id": "aramoun",
+   "name": {
+    "en": "Aramoun · Choueifat",
+    "ar": "عرمون · الشويفات"
+   },
+   "area": {
+    "en": "Aramoun main road, Choueifat",
+    "ar": "طريق عرمون العام، الشويفات"
+   },
+   "phone": "05 810 404",
+   "wa": "9613215616",
+   "hours": {
+    "en": "Daily 7 AM – 10 PM",
+    "ar": "يومياً ٧ ص – ١٠ م"
+   },
+   "open": true,
+   "paused": false,
+   "deliveryFee": 2.5,
+   "minOrder": 8,
+   "eta": "35–45 min",
+   "lat": 33.7885,
+   "lng": 35.4826,
+   "zones": [
+    "Aramoun",
+    "Choueifat",
+    "Bchamoun",
+    "Khalde",
+    "Dawhet Aramoun",
+    "Doha",
+    "Naameh"
+   ]
+  }
+ ],
+ "intl": {
+  "carrier": "DHL Express",
+  "minOrderUsd": 40,
+  "freeOver": 250,
+  "packagingNote": {
+   "en": "Vacuum-sealed tins, 3–6 business days",
+   "ar": "علب محكمة الإغلاق، ٣–٦ أيام عمل"
+  },
+  "countries": [
+   {
+    "code": "AE",
+    "name": {
+     "en": "United Arab Emirates",
+     "ar": "الإمارات"
+    },
+    "flag": "🇦🇪",
+    "ratePerKg": 14,
+    "base": 18,
+    "days": "2–3",
+    "enabled": true
+   },
+   {
+    "code": "SA",
+    "name": {
+     "en": "Saudi Arabia",
+     "ar": "السعودية"
+    },
+    "flag": "🇸🇦",
+    "ratePerKg": 15,
+    "base": 19,
+    "days": "3–4",
+    "enabled": true
+   },
+   {
+    "code": "KW",
+    "name": {
+     "en": "Kuwait",
+     "ar": "الكويت"
+    },
+    "flag": "🇰🇼",
+    "ratePerKg": 15,
+    "base": 19,
+    "days": "3–4",
+    "enabled": true
+   },
+   {
+    "code": "QA",
+    "name": {
+     "en": "Qatar",
+     "ar": "قطر"
+    },
+    "flag": "🇶🇦",
+    "ratePerKg": 15,
+    "base": 19,
+    "days": "3–4",
+    "enabled": true
+   },
+   {
+    "code": "FR",
+    "name": {
+     "en": "France",
+     "ar": "فرنسا"
+    },
+    "flag": "🇫🇷",
+    "ratePerKg": 18,
+    "base": 24,
+    "days": "3–5",
+    "enabled": true
+   },
+   {
+    "code": "DE",
+    "name": {
+     "en": "Germany",
+     "ar": "ألمانيا"
+    },
+    "flag": "🇩🇪",
+    "ratePerKg": 18,
+    "base": 24,
+    "days": "3–5",
+    "enabled": true
+   },
+   {
+    "code": "GB",
+    "name": {
+     "en": "United Kingdom",
+     "ar": "بريطانيا"
+    },
+    "flag": "🇬🇧",
+    "ratePerKg": 19,
+    "base": 25,
+    "days": "3–5",
+    "enabled": true
+   },
+   {
+    "code": "SE",
+    "name": {
+     "en": "Sweden",
+     "ar": "السويد"
+    },
+    "flag": "🇸🇪",
+    "ratePerKg": 19,
+    "base": 26,
+    "days": "4–6",
+    "enabled": true
+   },
+   {
+    "code": "US",
+    "name": {
+     "en": "United States",
+     "ar": "الولايات المتحدة"
+    },
+    "flag": "🇺🇸",
+    "ratePerKg": 24,
+    "base": 32,
+    "days": "4–6",
+    "enabled": true
+   },
+   {
+    "code": "CA",
+    "name": {
+     "en": "Canada",
+     "ar": "كندا"
+    },
+    "flag": "🇨🇦",
+    "ratePerKg": 24,
+    "base": 32,
+    "days": "4–6",
+    "enabled": true
+   },
+   {
+    "code": "AU",
+    "name": {
+     "en": "Australia",
+     "ar": "أستراليا"
+    },
+    "flag": "🇦🇺",
+    "ratePerKg": 28,
+    "base": 36,
+    "days": "5–7",
+    "enabled": true
+   },
+   {
+    "code": "BR",
+    "name": {
+     "en": "Brazil",
+     "ar": "البرازيل"
+    },
+    "flag": "🇧🇷",
+    "ratePerKg": 30,
+    "base": 38,
+    "days": "6–9",
+    "enabled": false
+   }
+  ]
+ },
+ "banners": [
+  {
+   "id": "b1",
+   "img": "/img/menu/gallery3.webp",
+   "title": {
+    "en": "Baklawa by the tray",
+    "ar": "بقلاوة بالصينية"
+   },
+   "sub": {
+    "en": "Mixed trays from $11.11 / ½ kg",
+    "ar": "صواني مشكلة من ١١.١١$ / نص كيلو"
+   },
+   "active": true,
+   "link": "baklawa"
+  },
+  {
+   "id": "b2",
+   "img": "/img/menu/gallery2.webp",
+   "title": {
+    "en": "Halawet El Jibn, fresh every morning",
+    "ar": "حلاوة الجبن طازجة كل صباح"
+   },
+   "sub": {
+    "en": "From 5:30 AM at Malla",
+    "ar": "من ٥:٣٠ صباحاً في الملا"
+   },
+   "active": true,
+   "link": "platters"
+  },
+  {
+   "id": "b3",
+   "img": "/img/menu/gallery1.webp",
+   "title": {
+    "en": "10% off delivery orders",
+    "ar": "خصم ١٠٪ على طلبات التوصيل"
+   },
+   "sub": {
+    "en": "Applied automatically at checkout",
+    "ar": "يُطبّق تلقائياً عند الدفع"
+   },
+   "active": true,
+   "link": "knefeh"
+  }
+ ]
+}

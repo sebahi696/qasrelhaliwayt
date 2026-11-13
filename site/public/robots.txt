@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /staff/
+Disallow: /app/admin.html
+Sitemap: https://qasralhalaweyat.com/sitemap-index.xml

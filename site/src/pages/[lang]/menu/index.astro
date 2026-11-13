@@ -1,0 +1,17 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { langs, t, L, money, type Lang } from '../../../i18n';
+import menu from '../../../data/menu.json';
+export function getStaticPaths() { return langs.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const u = (p: string) => `${base}/${lang}/${p}/`;
+const half = (i: any) => ['kilo'].includes(i.cat);
+const jsonld = [{ '@context': 'https://schema.org', '@type': 'Menu', name: 'Qasr Al Halaweyat menu', hasMenuSection: menu.categories.map((c: any) => ({ '@type': 'MenuSection', name: c.name.en, hasMenuItem: menu.items.filter((i: any) => i.cat === c.id).map((i: any) => ({ '@type': 'MenuItem', name: i.name.en, offers: { '@type': 'Offer', price: i.price, priceCurrency: 'USD' } })) })) }];
+---
+<Base lang={lang} title={t(lang,'menu_title')} description={t(lang,'menu_sub')} path="menu" jsonld={jsonld}>
+<div class="wrap" style="padding-top:36px"><div class="eyebrow">{t(lang,'brand')}</div><h1 class="disp" style="font-size:44px;margin:6px 0 8px">{t(lang,'menu_title')}</h1><p class="muted" style="margin:0 0 18px">{t(lang,'menu_sub')}</p>
+<div class="cats">{menu.categories.map((c: any) => <a class="catchip" href={`#${c.id}`}>{c.emoji} {L(c.name,lang)}</a>)}</div>
+{menu.categories.map((c: any) => <section id={c.id} style="padding-top:26px"><div class="sec-h" style="margin-bottom:6px"><div><h2 class="disp" style="font-size:30px;margin:0">{L(c.name,lang)}</h2></div><span class={`chip ${c.intl?'ind':''}`}>{c.intl ? '✈️ ' + t(lang,'ships') : '🇱🇧 ' + t(lang,'in_lebanon')}</span></div>
+  <div class="grid c2" style="gap:0 40px">{menu.items.filter((i: any) => i.cat === c.id).map((i: any) => <a class="item" href={u(`menu/${c.id}/${i.id}`)}>{i.img ? <img src={`${base}${i.img}`} alt={L(i.name,lang)} loading="lazy" width="84" height="84"/> : <div class="e">{c.emoji}</div>}<div style="min-width:0"><div class="n">{L(i.name,lang)} {i.popular && <span class="chip" style="font-size:10px;padding:2px 7px">★ {t(lang,'popular')}</span>}</div>{L(i.desc,lang) && <div class="d">{L(i.desc,lang)}</div>}</div><div class="pr money">{money(i.price)} {half(i) && <small>{t(lang,'per_half')}</small>}</div></a>)}</div></section>)}
+</div>
+</Base>

@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import { langs, t, L, money, type Lang } from '../../i18n';
+import menu from '../../data/menu.json';
+export function getStaticPaths() { return langs.map(lang => ({ params: { lang } })); }
+const lang = Astro.params.lang as Lang; const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const desc = lang==='ar' ? 'فروع قصر الحلويات العربية في بيروت وعرمون: الملا، كورنيش المزرعة، عرمون–الشويفات. الدوام والهاتف والتوصيل.' : 'Qasr Al Halaweyat branches in Beirut and Aramoun: Malla, Corniche El Mazraa, Aramoun–Choueifat. Hours, phone, delivery zones.';
+---
+<Base lang={lang} title={t(lang,'sec_branches')} description={desc} path="branches">
+<div class="wrap" style="padding-top:36px"><div class="eyebrow">Lebanon</div><h1 class="disp" style="font-size:44px;margin:6px 0 18px">{t(lang,'sec_branches')}</h1>
+<div class="grid c3">{menu.branches.map((b: any) => <div class="card bcard"><h2 class="disp" style="font-size:24px;margin:0">{L(b.name,lang)}</h2><div class="kv">📍 {L(b.area,lang)}</div><div class="kv">🕒 {L(b.hours,lang)}</div><div class="kv">🛵 {t(lang,'delivery')} {money(b.deliveryFee)} · {t(lang,'eta')} {b.eta}</div><div class="kv" style="font-size:12.5px">{b.zones.join(' · ')}</div><div class="acts"><a class="btn sm o" href={`tel:+961${b.phone.replace(/\D/g,'').replace(/^0/,'')}`}>📞 {b.phone}</a><a class="btn sm wa" href={`https://wa.me/${b.wa}?text=${encodeURIComponent(t(lang,'whatsapp_msg'))}`} target="_blank" rel="noopener">WhatsApp</a><a class="btn sm o" href={`https://www.google.com/maps?q=${b.lat},${b.lng}`} target="_blank" rel="noopener">🗺 Maps</a></div></div>)}</div>
+<div class="card" style="margin-top:26px;padding:22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:var(--indigo);color:#fff;border:0"><div style="flex:1;min-width:240px"><b style="font-size:19px;display:block">{t(lang,'lb_title')}</b><span style="opacity:.9">{t(lang,'lb_sub')}</span></div><a class="btn g" href={`${base}/app/`}>{t(lang,'cta_app')}</a></div>
+</div>
+</Base>
