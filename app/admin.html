@@ -128,7 +128,7 @@ function render(){ renderNav(); $('#title').textContent=t(S.page); $('#subtitle'
 
 const age=o=>Math.round((Date.now()-o.ts)/60000);
 const bname=id=>id==='intl'?t('intl'):L(D.liveBranches().find(b=>b.id===id)?.name);
-const itemName=id=>L(D.items.find(i=>i.id===id)?.name);
+const itemName=(id,l)=>L(D.items.find(i=>i.id===id)?.name)||(l&&l.name)||String(id);
 
 // ---------- Orders board ----------
 function orders(){
@@ -143,9 +143,9 @@ function orders(){
 }
 function ocard(o){ const a=age(o), late=D.isOpen(o.status)&&a>=30, intl=o.type==='intl'; const c=o.customer;
   return `<div class="card ocard ${late?'late':''} ${o.status==='received'?'new':''}"><div class="t"><b>#${o.id}</b><span class="pill ${o.status}">${L(D.STATUS[o.status])}</span><span class="age ${late?'late':''}">${a<60?a+' '+t('min'):Math.round(a/60)+' h'}${late?' · '+t('late'):''}</span></div>
-  <div class="tags"><span class="chip ind">${intl?'✈️ '+(D.intl.countries.find(x=>x.code===o.country)?.flag||'')+' '+bname('intl'):'📍 '+bname(o.branch)}</span><span class="chip">${intl?'DHL':o.type==='pickup'?'🏪 '+L({en:'Pickup',ar:'استلام'}):'🛵 '+L({en:'Delivery',ar:'توصيل'})}</span><span class="chip ${c.verified?'ok':'warn'}">${c.verified?'✓ '+t('verified'):'! '+t('unverified')}</span><span class="chip">${o.pay==='cash'?'💵':o.pay==='card'?'💳':'📱'} ${t(o.pay)}</span>${o.pay!=='cash'?`<button class="chip ${o.paid?'ok':'bad'}" data-act="paid" data-id="${o.id}" style="cursor:pointer">${o.paid?'✓ '+L({en:'Paid',ar:'مدفوع'})+(o.payRef?' · '+o.payRef:''):'✕ '+L({en:'Unpaid',ar:'غير مدفوع'})}</button>`:''}</div>
+  <div class="tags"><span class="chip ind">${intl?'✈️ '+(D.intl.countries.find(x=>x.code===o.country)?.flag||'')+' '+bname('intl'):'📍 '+bname(o.branch)}</span>${o.source==='shopify'?'<span class="chip">🛍️ Shopify</span>':o.source==='website'?'<span class="chip">🌐 Web</span>':''}<span class="chip">${intl?'DHL':o.type==='pickup'?'🏪 '+L({en:'Pickup',ar:'استلام'}):'🛵 '+L({en:'Delivery',ar:'توصيل'})}</span><span class="chip ${c.verified?'ok':'warn'}">${c.verified?'✓ '+t('verified'):'! '+t('unverified')}</span><span class="chip">${o.pay==='cash'?'💵':o.pay==='card'?'💳':'📱'} ${t(o.pay)}</span>${o.pay!=='cash'?`<button class="chip ${o.paid?'ok':'bad'}" data-act="paid" data-id="${o.id}" style="cursor:pointer">${o.paid?'✓ '+L({en:'Paid',ar:'مدفوع'})+(o.payRef?' · '+o.payRef:''):'✕ '+L({en:'Unpaid',ar:'غير مدفوع'})}</button>`:''}</div>
   <div><div class="c">${c.name} · <span dir="ltr">${c.phone}</span></div>${c.address?`<div class="a">${c.address}</div>`:''}${o.notes?`<div class="a">“${o.notes}”</div>`:''}</div>
-  <div class="ln">${o.lines.map(l=>`<span>${l.qty}× ${itemName(l.id)}${l.opts?` <span style="color:var(--muted)">· ${l.opts}</span>`:''}</span>`).join('')}</div>
+  <div class="ln">${o.lines.map(l=>`<span>${l.qty}× ${itemName(l.id,l)}${l.opts?` <span style="color:var(--muted)">· ${l.opts}</span>`:''}</span>`).join('')}</div>
   <div class="tot"><span>${t('revenue')==='Revenue'?'Total':'الإجمالي'}${o.discount?` <span style="color:var(--ok);font-weight:700;font-size:12px">−${fmt(o.discount)}${o.promo?' '+o.promo:''}</span>`:''}</span><span class="money">${fmt(o.total)}</span></div>
   ${o.driver?`<div class="a">🛵 ${o.driver}</div>`:''}${o.tracking?`<div class="a">📦 ${o.tracking}</div>`:''}
   <div class="acts">${actions(o)}</div></div>`; }
